@@ -41,8 +41,18 @@ export default function ContactForm() {
       const json = await res.json();
       if (!res.ok) throw new Error(json?.error || "Submission failed");
 
-      setStatus({ type: "success", message: "Thanks — we received your enquiry." });
-      setForm({ parentName: "", email: "", phone: "", childName: "", dob: "", reason: "" });
+      setStatus({
+        type: "success",
+        message: "Thanks — we received your enquiry.",
+      });
+      setForm({
+        parentName: "",
+        email: "",
+        phone: "",
+        childName: "",
+        dob: "",
+        reason: "",
+      });
     } catch (err) {
       setStatus({ type: "error", message: err.message || "Submission failed" });
     } finally {
@@ -101,7 +111,9 @@ export default function ContactForm() {
       </label>
 
       <label className="block mb-3">
-        <div className="text-eyebrow text-purple mb-2">Date Of Birth (Child)</div>
+        <div className="text-eyebrow text-purple mb-2">
+          Date Of Birth (Child)
+        </div>
         <input
           name="dob"
           type="date"
@@ -131,13 +143,19 @@ export default function ContactForm() {
         </div>
       )}
 
-      <Button type="submit" variant="secondary" size="lg" className="w-full" disabled={loading}>
+      <Button
+        type="submit"
+        variant="secondary"
+        size="lg"
+        className="w-full"
+        disabled={loading}
+      >
         {loading ? "Sending…" : "Submit"}
       </Button>
 
       <div className="mt-6 text-center text-body text-ink-body">
-        <p className="mb-2">Phone number: +91 9150047110</p>
-        <p>Email: fourcups@thelovehopecompany.com</p>
+        <p className="mb-2">Phone number: +91 9876543210</p>
+        <p>Email: contact@vidyanjali.com</p>
       </div>
     </form>
   );
