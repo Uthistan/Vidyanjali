@@ -1,26 +1,242 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   Vidyanjali — design tokens
+   Tailwind v4 is CSS-first: tokens live here, not in a config file.
+
+   Brand colours are read from the supplied logo: the deep purple of the
+   wordmark, the lighter purple of the left infinity loop, the blue-green
+   teal of the right loop and tagline, and the amber-gold of the arc and
+   top circle. Sampled by eye from the raster — nudge them if you have the
+   exact brand values. Every colour on the site resolves through this block.
+   ============================================================ */
+
+@theme {
+  /* --- Surfaces --------------------------------------------------- */
+  --color-canvas: #fffdf5; /* warm cream — the dominant surface, never pure white */
+  --color-canvas-lift: #ffffff; /* raised cards only */
+  --color-canvas-deep: #2b1547; /* footer / closing CTA band — deep brand purple */
+
+  /* --- Ink --------------------------------------------------------- */
+  --color-ink: #42206e; /* wordmark purple — headings. Replaces black. 12.4:1 on canvas. */
+  --color-ink-body: #574f61; /* warm purple-grey — body copy */
+  --color-ink-soft: #877f92; /* captions, meta, de-emphasised */
+  --color-ink-invert: #fffdf5;
+
+  /* --- Brand ------------------------------------------------------- */
+  --color-purple: #42206e; /* wordmark */
+  --color-purple-mid: #5c2d91; /* left infinity loop — links, secondary accents */
+  --color-teal: #1d5f6b; /* right loop + tagline. 7.1:1 on canvas. */
+  --color-gold: #f5a623; /* arc + top circle. Fills only — fails AA as text. */
+
+  /* Soft tints — for section bands and card fills, never for text */
+  --color-purple-soft: #f4eefa;
+  --color-teal-soft: #ebf4f5;
+  --color-gold-soft: #fdf4e4;
+
+  /* --- Lines ------------------------------------------------------- */
+  --color-rule: rgba(66, 32, 110, 0.13);
+  --color-rule-strong: rgba(66, 32, 110, 0.26);
+
+  /* --- Type families ---------------------------------------------- */
+  --font-display: var(--font-vidyanjali-display), Georgia, serif;
+  --font-sans: var(--font-vidyanjali-sans), ui-sans-serif, system-ui, sans-serif;
+
+  /* --- Type scale --------------------------------------------------
+     Mirrors the audited fourcups.co hierarchy: tight leading and negative
+     tracking on headings, generous 21px body at 1.6. Fluid via clamp()
+     rather than the reference's duplicated per-breakpoint markup. */
+
+  --text-display: clamp(2.5rem, 1.6rem + 4.5vw, 3.75rem); /* 40 → 60px */
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.03em;
+  --text-display--font-weight: 600;
+
+  --text-h1: clamp(2.25rem, 1.75rem + 2.5vw, 2.9375rem); /* 36 → 47px */
+  --text-h1--line-height: 1.1;
+  --text-h1--letter-spacing: -0.025em;
+  --text-h1--font-weight: 600;
+
+  --text-h2: clamp(2rem, 1.7rem + 1.5vw, 2.5rem); /* 32 → 40px */
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.02em;
+  --text-h2--font-weight: 600;
+
+  --text-h3: clamp(1.3125rem, 1.2rem + 0.6vw, 1.5rem); /* 21 → 24px */
+  --text-h3--line-height: 1.25;
+  --text-h3--letter-spacing: -0.02em;
+  --text-h3--font-weight: 600;
+
+  --text-lede: clamp(1.1875rem, 1.1rem + 0.5vw, 1.4375rem); /* 19 → 23px */
+  --text-lede--line-height: 1.55;
+  --text-lede--letter-spacing: -0.015em;
+
+  --text-body: 1.3125rem; /* 21px — the signature body size */
+  --text-body--line-height: 1.6;
+  --text-body--letter-spacing: -0.015em;
+
+  --text-body-sm: 1.0625rem; /* 17px */
+  --text-body-sm--line-height: 1.6;
+  --text-body-sm--letter-spacing: -0.01em;
+
+  --text-caption: 0.9375rem; /* 15px */
+  --text-caption--line-height: 1.55;
+
+  --text-eyebrow: 0.75rem; /* 12px */
+  --text-eyebrow--line-height: 2;
+  --text-eyebrow--letter-spacing: 0.16em;
+  --text-eyebrow--font-weight: 600;
+
+  /* --- Layout ------------------------------------------------------ */
+  --container-page: 70rem; /* 1120px — the content column */
+  --container-measure: 34rem; /* ~544px — paragraph measure */
+
+  /* --- Radii ------------------------------------------------------- */
+  --radius-card: 1.5rem;
+  --radius-pill: 999px;
+
+  /* --- Motion ------------------------------------------------------ */
+  --ease-out-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --animate-marquee: marquee 42s linear infinite;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ============================================================
+   Base
+   ============================================================ */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink-body);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    letter-spacing: -0.015em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  /* Bind the display face to the heading SIZES, not just to heading tags.
+     Tailwind's --text-* tokens can carry weight and tracking but not a family,
+     so without this a `text-h2` on a <p> or <div> silently falls back to the
+     body face. Declared in the base layer, so a `font-sans` utility still
+     overrides it where a heading size is wanted in the body face. */
+  h1,
+  h2,
+  h3,
+  h4,
+  .text-display,
+  .text-h1,
+  .text-h2,
+  .text-h3 {
+    font-family: var(--font-display);
+  }
+
+  /* A single, consistent focus treatment across every interactive element. */
+  :focus-visible {
+    outline: 2px solid var(--color-teal);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-gold);
+    color: var(--color-purple);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ============================================================
+   Components
+   ============================================================ */
+
+@layer components {
+  /* The signature CTA interaction from the audit: on hover a colour fill
+     sweeps upward from the bottom edge while the label swaps colour. */
+  .btn-sweep {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .btn-sweep::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-color: var(--btn-sweep-color, var(--color-gold));
+    transform: scaleY(0);
+    transform-origin: bottom center;
+    transition: transform 0.42s var(--ease-out-soft);
+  }
+
+  .btn-sweep:hover::before,
+  .btn-sweep:focus-visible::before {
+    transform: scaleY(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn-sweep::before {
+      transition: none;
+    }
+  }
+
+  /* Scroll-reveal. The hidden start state is scoped to [data-js="true"],
+     which the inline script in layout.js sets before first paint. Without
+     JS the rule never matches, so content renders plainly rather than
+     staying stuck at opacity 0. Reveal.jsx then flips [data-revealed]. */
+  [data-js="true"] .reveal {
+    opacity: 0;
+    transform: translate3d(0, 1.5rem, 0);
+    transition:
+      opacity 0.7s var(--ease-out-soft),
+      transform 0.7s var(--ease-out-soft);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  [data-js="true"] .reveal[data-revealed="true"] {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-js="true"] .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
 }

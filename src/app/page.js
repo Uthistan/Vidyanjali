@@ -1,69 +1,151 @@
-import Image from "next/image";
+import Link from "next/link";
+import Section from "@/components/layout/Section";
+import SplitBlock from "@/components/layout/SplitBlock";
+import SectionHeading from "@/components/ui/SectionHeading";
+import Button from "@/components/ui/Button";
+import Eyebrow from "@/components/ui/Eyebrow";
+import Prose from "@/components/ui/Prose";
+import Reveal from "@/components/ui/Reveal";
+import InfinityMotif from "@/components/brand/InfinityMotif";
+import { site } from "@/content/site";
+import { founders, journey, mission } from "@/content/about";
+import { programmeNames } from "@/content/programmes";
 
+/**
+ * Home.
+ *
+ * The arc is: who Vidyanjali is (hero) → why it exists (mission) → what it
+ * offers (programmes) → who does the work (founders). Every line is the
+ * client's own; see the source notes in src/content/.
+ *
+ * Two sections from the original skeleton are gone rather than filled with
+ * invention: the outcome marquee ("what families begin to notice") and the
+ * problem statement ("why this matters"). Neither has supplied copy. Restore
+ * them from git history the day the client writes them.
+ */
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <>
+      {/* Hero — type is the hero; no background image, no overlay. */}
+      <Section spacing="lg" className="overflow-hidden">
+        <InfinityMotif
+          tone="gold"
+          figures={false}
+          className="pointer-events-none absolute -top-20 -right-32 h-112 w-auto opacity-[0.07]"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.js
-            </code>{" "}
-            file.
+
+        <Reveal className="relative">
+          <Eyebrow className="mb-6">{site.tagline}</Eyebrow>
+
+          {/* Trimmed from the opening clause of the client's mission — the one
+              sentence that says what the centre is for. Swap it wholesale if
+              they write a dedicated headline. */}
+          <h1 className="max-w-[20ch] text-display">
+            Empowering children with special needs to become independent,
+            confident and valued individuals.
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+        </Reveal>
+
+        <Reveal delay={120} className="relative">
+          <p className="mt-10 max-w-measure text-lede text-ink-body">
+            {journey[0]}
           </p>
+
+          <div className="mt-12 flex flex-wrap items-center gap-4">
+            <Button href="/programmes" variant="primary" size="lg">
+              Our programmes
+            </Button>
+            <Button href="/about" variant="secondary" size="lg">
+              About Vidyanjali
+            </Button>
+          </div>
+        </Reveal>
+      </Section>
+
+      {/* Mission */}
+      <Section tone="purple">
+        <SplitBlock
+          heading={
+            <Reveal>
+              <SectionHeading
+                eyebrow="Mission"
+                eyebrowTone="purple"
+                title="Our mission"
+              />
+            </Reveal>
+          }
+        >
+          <Reveal delay={100}>
+            <Prose>
+              {mission.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </Prose>
+          </Reveal>
+        </SplitBlock>
+      </Section>
+
+      {/* Programmes — the full list of names; descriptions live on
+          /programmes. Deliberately a static list rather than the Marquee:
+          the programmes are the offering, not decoration, and a ticker of
+          seven short names visibly repeats itself across a desktop width. */}
+      <Section tone="teal">
+        <Reveal>
+          <SectionHeading eyebrow="Programmes" title="Programmes offered" />
+        </Reveal>
+
+        <ul className="mt-14 grid sm:grid-cols-2 sm:gap-x-12 lg:grid-cols-3">
+          {programmeNames.map((name, index) => (
+            <Reveal
+              as="li"
+              key={name}
+              delay={index * 70}
+              className="border-t border-rule py-6"
+            >
+              <p className="text-h3 text-ink">{name}</p>
+            </Reveal>
+          ))}
+        </ul>
+
+        <Reveal delay={200} className="mt-14">
+          <Button href="/programmes" variant="accent">
+            See all programmes
+          </Button>
+        </Reveal>
+      </Section>
+
+      {/* Founders — names and roles only. Full biographies are on /about. */}
+      <Section>
+        <Reveal>
+          <SectionHeading eyebrow="People" title="Our founders" />
+        </Reveal>
+
+        <div className="mt-14 grid gap-x-12 gap-y-10 md:grid-cols-2">
+          {founders.map((person, index) => (
+            <Reveal key={person.name} delay={index * 100}>
+              <div className="border-t border-rule pt-8">
+                <Eyebrow className="mb-4">{person.role}</Eyebrow>
+                <h3 className="text-h3">{person.name}</h3>
+                <p className="mt-2 font-sans text-caption text-ink-soft">
+                  {person.credentials}
+                </p>
+              </div>
+            </Reveal>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        <Reveal delay={200} className="mt-12">
+          <Link
+            href="/about#people"
+            className="inline-flex items-center gap-2 text-body-sm font-semibold text-purple-mid no-underline transition-[gap] duration-300 ease-out-soft hover:gap-3"
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+            Meet the founders and team
+            <span aria-hidden="true">&rarr;</span>
+          </Link>
+        </Reveal>
+      </Section>
+
+      {/* Invitation — handled by the footer CTA band. */}
+    </>
   );
 }
