@@ -1,52 +1,39 @@
 import Link from "next/link";
 import Logo from "@/components/brand/Logo";
-import InfinityMotif from "@/components/brand/InfinityMotif";
-import Button from "@/components/ui/Button";
 import Container from "./Container";
-import { contact, footerCta, navItems, site } from "@/content/site";
+import { allRoutes, contact, site } from "@/content/site";
 
 /**
- * Footer: a large closing CTA band, then a thin link row.
+ * Footer: a thin closing row and nothing else.
  *
- * Kept deliberately thin per the audit — no sitemap grid, no newsletter form,
- * no social wall. The closing invitation is the point.
+ * The large CTA band that used to live here is now `ClosingCTA`, placed by
+ * each page — see that file. What remains is deliberately quiet: the lockup,
+ * the routes, a copyright line.
+ *
+ * `Get Involved` appears here even though it is absent from the header. The
+ * footer is where a site lists what exists; the header is where it says what
+ * is worth your attention. The page is still two `ContentPending` blocks.
+ *
+ * NO invented contact details. `contact.email` is null until the client
+ * supplies it, and the block below simply does not render — which is the
+ * correct behaviour, not a gap to be filled with a plausible-looking address.
  */
 export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-auto">
-      {/* Closing CTA */}
-      <div className="relative overflow-hidden bg-canvas-deep text-ink-invert">
-        <InfinityMotif
-          tone="gold"
-          figures={false}
-          strokeWidth={3}
-          className="pointer-events-none absolute -right-16 -bottom-16 h-72 w-auto opacity-[0.08]"
-        />
-
-        <Container className="relative py-20 sm:py-28">
-          <div className="flex flex-col items-start gap-10 lg:flex-row lg:items-end lg:justify-between">
-            <h2 className="max-w-[24ch] text-h1 text-ink-invert">
-              {footerCta.heading}
-            </h2>
-
-            <Button href={footerCta.href} variant="invert" size="lg">
-              {footerCta.action}
-            </Button>
-          </div>
-        </Container>
-      </div>
-
-      {/* Link row */}
-      <Container className="flex flex-col gap-10 py-14 lg:flex-row lg:items-center lg:justify-between">
-        {/* Live type rather than the stacked lockup image: at footer scale the
-            artwork's tagline is only a few pixels tall and reads as a smudge. */}
-        <Logo variant="full" size="md" />
+    <footer className="mt-auto border-t border-rule">
+      <Container className="flex flex-col gap-12 py-16 lg:flex-row lg:items-start lg:justify-between">
+        <div className="flex flex-col gap-5">
+          {/* Live type rather than the stacked lockup image: at footer scale
+              the artwork's tagline is only a few pixels tall and reads as a
+              smudge. */}
+          <Logo variant="full" size="md" />
+        </div>
 
         <nav aria-label="Footer">
-          <ul className="flex flex-wrap items-center gap-x-8 gap-y-3">
-            {navItems.map((item) => (
+          <ul className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-x-10">
+            {allRoutes.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}

@@ -2,6 +2,7 @@ import PageHeader from "@/components/layout/PageHeader";
 import Section from "@/components/layout/Section";
 import Reveal from "@/components/ui/Reveal";
 import ContentPending from "@/components/ui/ContentPending";
+import ClosingCTA from "@/components/layout/ClosingCTA";
 
 export const metadata = {
   title: "Get Involved",
@@ -31,6 +32,8 @@ export default function GetInvolvedPage() {
           />
         </Reveal>
       </Section>
+
+      <ClosingCTA />
     </>
   );
 }

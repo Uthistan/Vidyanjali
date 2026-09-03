@@ -3,6 +3,7 @@ import Section from "@/components/layout/Section";
 import Reveal from "@/components/ui/Reveal";
 import ContactForm from "@/components/contact/ContactForm";
 import { contact } from "@/content/site";
+import ClosingCTA from "@/components/layout/ClosingCTA";
 
 export const metadata = {
   title: "Contact",
@@ -15,10 +16,10 @@ export default function ContactPage() {
     <>
       <PageHeader eyebrow="Contact" title="Get in touch" motifTone="teal" />
 
-      <Section containerClassName="flex flex-col items-center">
+      <Section>
         {hasDetails ? (
           <Reveal>
-            <dl className="grid gap-10 sm:grid-cols-2">
+            <dl className="mb-14 grid gap-10 border-t-[3px] border-gold pt-7 sm:grid-cols-2">
               {contact.email && (
                 <div>
                   <dt className="text-eyebrow font-sans uppercase text-teal">
@@ -65,12 +66,15 @@ export default function ContactPage() {
           </Reveal>
         ) : null}
 
-        <Reveal delay={100} className="mt-8 w-full">
-          <div className="w-full flex justify-center">
-            <ContactForm />
-          </div>
+        {/* Eight of twelve columns, flush left. The form used to be centred at
+            384px in the full page width, which read as a widget dropped into
+            an empty screen rather than as part of the layout. */}
+        <Reveal delay={100} className="lg:w-8/12">
+          <ContactForm />
         </Reveal>
       </Section>
+
+      {/* <ClosingCTA /> */}
     </>
   );
 }

@@ -11,6 +11,10 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import ContentPending from "@/components/ui/ContentPending";
 import Logo from "@/components/brand/Logo";
 import InfinityMotif from "@/components/brand/InfinityMotif";
+import ImageReveal from "@/components/ui/ImageReveal";
+import ParallaxImage from "@/components/ui/ParallaxImage";
+import PhotoCarousel from "@/components/ui/PhotoCarousel";
+import { gaps, photos, rejected } from "@/content/photos";
 
 /**
  * Internal design reference.
@@ -29,19 +33,35 @@ export const metadata = {
 };
 
 const SWATCHES = [
-  { name: "canvas", hex: "#FFFDF5", note: "Page surface. Never pure white." },
-  { name: "canvas-lift", hex: "#FFFFFF", note: "Raised cards only." },
-  { name: "canvas-deep", hex: "#2B1547", note: "Footer / closing CTA band." },
-  { name: "ink", hex: "#42206E", note: "Wordmark purple. Headings. 12.4:1." },
-  { name: "ink-body", hex: "#574F61", note: "Body copy. 7.4:1." },
-  { name: "ink-soft", hex: "#877F92", note: "Captions and meta." },
+  { name: "canvas", hex: "#FBF6EC", note: "The paper. Warm cream, never white." },
+  { name: "canvas-warm", hex: "#F3E8D6", note: "Sand. The second band — hero field, interior mastheads, row hover." },
+  { name: "canvas-deep", hex: "#331A52", note: "Deep purple band. Mission, closing CTA." },
+  { name: "teal-deep", hex: "#154C57", note: "Deep teal band. Beyond the classroom." },
+  { name: "canvas-lift", hex: "#FFFFFF", note: "Form fields and raised cards only." },
+  { name: "ink", hex: "#42206E", note: "Wordmark purple. Headings. 11.7:1 on canvas." },
+  { name: "ink-body", hex: "#4E4557", note: "Body copy. 8.4:1 on canvas." },
+  { name: "ink-soft", hex: "#6A6275", note: "Captions and meta. 5.4:1 canvas, 4.8:1 sand." },
+  { name: "ink-invert", hex: "#FBF6EC", note: "On the dark bands. 13.8:1 on purple, 8.9:1 on teal." },
   { name: "purple", hex: "#42206E", note: "Wordmark. Brand primary." },
-  { name: "purple-mid", hex: "#5C2D91", note: "Left loop. Links, accents. 9.2:1." },
-  { name: "teal", hex: "#1D5F6B", note: "Right loop + tagline. 7.1:1." },
-  { name: "gold", hex: "#F5A623", note: "Arc + top circle. Fills only — fails AA as text." },
-  { name: "purple-soft", hex: "#F4EEFA", note: "Tint band / card fill." },
-  { name: "teal-soft", hex: "#EBF4F5", note: "Tint band / card fill." },
-  { name: "gold-soft", hex: "#FDF4E4", note: "Tint band / card fill." },
+  { name: "purple-mid", hex: "#5C2D91", note: "Left loop. Links, accents. 8.7:1." },
+  { name: "teal", hex: "#1D5F6B", note: "Right loop + tagline. 6.7:1. Index numerals." },
+  { name: "gold", hex: "#F5A623", note: "Arc + top circle. Rules and fills; as text only on the dark bands (7.4:1 / 4.7:1)." },
+  { name: "gold-deep", hex: "#8A5A0A", note: "Gold burnt down until it reads as text on a light surface. 5.5:1 canvas, 4.9:1 sand." },
+  { name: "purple-soft", hex: "#F3ECF8", note: "Pale tint. Interior card fill." },
+  { name: "teal-soft", hex: "#E8F1F2", note: "Pale tint. Interior card fill." },
+  { name: "gold-soft", hex: "#FAEFD9", note: "Pale tint. Interior card fill." },
+  { name: "danger", hex: "#9A2C2C", note: "Form validation only. 7.0:1." },
+];
+
+/* The carousel demo. Ten photographs survived the audit; these are the six
+   that hold up at carousel size — see src/content/photos.js. */
+const CAROUSEL = [
+  { photo: photos.handsMirroring, caption: "Individual session" },
+  { photo: photos.walkingTogether, caption: "Walking together" },
+  { photo: photos.atTheWindow, caption: "A quiet moment" },
+  { photo: photos.clayWork, caption: "Working with clay" },
+  { photo: photos.parkDay, caption: "Park day" },
+  { photo: photos.clayInHand, caption: "A finished piece" },
 ];
 
 const TYPE_SPECS = [
@@ -264,6 +284,149 @@ export default function StyleguidePage() {
               <li>And the same leading</li>
             </ul>
           </Prose>
+        </Block>
+
+        {/* --------------------------------------------- Photography */}
+        <Block
+          title="Photography"
+          note="Ten masters survived the audit of seventeen supplied originals. Every one is a WhatsApp re-encode, portrait, and no wider than 1600px — so the framing below is portrait and squarish by necessity. There is no source here that can fill a full-bleed banner. Placements read from src/content/photos.js; no component hardcodes a path or an alt string."
+        >
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {Object.entries(photos).map(([key, photo], index) => (
+              <ImageReveal
+                key={key}
+                photo={photo}
+                ratio="portrait"
+                frame="hairline"
+                delay={index * 60}
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                caption={`${key} — ${photo.width}×${photo.height} · ${photo.quality}`}
+              />
+            ))}
+          </div>
+        </Block>
+
+        {/* ------------------------------------------ Image framing */}
+        <Block
+          title="Image framing"
+          note="The four ratios, plus the hairline frame. A thin rule rather than a shadow: it holds an image against the cream canvas without adding weight."
+        >
+          <div className="grid gap-8 sm:grid-cols-2">
+            <ImageReveal
+              photo={photos.oneToOneSession}
+              ratio="landscape"
+              frame="hairline"
+              sizes="(min-width: 640px) 50vw, 100vw"
+              caption="ratio: landscape · frame: hairline"
+            />
+            <ImageReveal
+              photo={photos.clayInHand}
+              ratio="square"
+              sizes="(min-width: 640px) 50vw, 100vw"
+              caption="ratio: square · frame: none"
+            />
+            <ImageReveal
+              photo={photos.atTheWindow}
+              ratio="tall"
+              sizes="(min-width: 640px) 50vw, 100vw"
+              caption="ratio: tall"
+            />
+            <ImageReveal
+              photo={photos.festivalRangoli}
+              ratio="portrait"
+              frame="hairline"
+              sizes="(min-width: 640px) 50vw, 100vw"
+              caption="ratio: portrait — a 600px master, so small placements only"
+            />
+          </div>
+        </Block>
+
+        {/* ---------------------------------------------- Parallax */}
+        <Block
+          title="Parallax"
+          note="The image drifts about 40px against the scroll across a full screen — felt more than seen. One per page at most. Scroll past it slowly; then turn on Reduce Motion and reload, and it holds still."
+        >
+          <div className="grid gap-8 sm:grid-cols-2">
+            <ParallaxImage
+              photo={photos.walkingTogether}
+              sizes="(min-width: 640px) 50vw, 100vw"
+            />
+            <div className="flex items-center">
+              <p className="max-w-measure text-body-sm text-ink-soft">
+                The frame is fixed; the photograph inside it moves. The media is
+                overscaled by 12% so the travel never exposes an edge, and the
+                animation loop only runs while the frame is on screen.
+              </p>
+            </div>
+          </div>
+        </Block>
+
+        {/* ---------------------------------------------- Carousel */}
+        <Block
+          title="Photo carousel"
+          note="A real scroll container with CSS scroll-snap, not a transform carousel — so swipe, trackpad, keyboard and screen readers all work natively, and with JS off it stays a scrollable row. Slides never fill the width: the next one is always partly visible."
+        >
+          <PhotoCarousel items={CAROUSEL} label="Life at Vidyanjali" />
+        </Block>
+
+        {/* --------------------------------------- Motion variants */}
+        <Block
+          title="Reveal variants"
+          note="One primitive, four variants, one IntersectionObserver. The visual states live in globals.css so prefers-reduced-motion is enforced in CSS and cannot be defeated by a component forgetting to check."
+        >
+          <div className="grid gap-8 sm:grid-cols-2">
+            <ImageReveal
+              photo={photos.clayWorkDetail}
+              ratio="portrait"
+              sizes="(min-width: 640px) 50vw, 100vw"
+              caption="mask — a wipe up from the bottom edge, media settling out of a 4% overscale"
+            />
+            <div className="flex flex-col justify-center gap-5">
+              <Reveal variant="fade" className="rounded-card bg-teal-soft p-8">
+                <p className="text-body-sm text-ink">variant: fade</p>
+              </Reveal>
+              <Reveal className="rounded-card bg-purple-soft p-8">
+                <p className="text-body-sm text-ink">variant: rise (default)</p>
+              </Reveal>
+              <Reveal variant="scale" className="rounded-card bg-gold-soft p-8">
+                <p className="text-body-sm text-ink">variant: scale</p>
+              </Reveal>
+            </div>
+          </div>
+        </Block>
+
+        {/* --------------------------------------------- Photo audit */}
+        <Block
+          title="Photo audit — rejected"
+          note="Kept in the repo so the next person to open the client's folder does not re-litigate it."
+        >
+          <ul className="flex flex-col">
+            {rejected.map((item) => (
+              <li key={item.source} className="border-t border-rule py-6">
+                <p className="font-mono text-caption text-ink">{item.source}</p>
+                <p className="mt-2 max-w-measure text-body-sm text-ink-soft">
+                  {item.reason}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </Block>
+
+        <Block
+          title="Photo audit — gaps"
+          note="Photographs the site will want and the client has not supplied. A shot list, not a problem to solve with stock."
+        >
+          <ul className="flex flex-col gap-3">
+            {gaps.map((gap) => (
+              <li key={gap} className="flex gap-3 text-body-sm text-ink-body">
+                <span
+                  aria-hidden="true"
+                  className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-pill bg-gold"
+                />
+                {gap}
+              </li>
+            ))}
+          </ul>
         </Block>
 
         {/* ------------------------------------------ Content pending */}

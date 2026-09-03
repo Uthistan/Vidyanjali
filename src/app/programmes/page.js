@@ -1,23 +1,41 @@
 import PageHeader from "@/components/layout/PageHeader";
 import Section from "@/components/layout/Section";
-import ContentPending from "@/components/ui/ContentPending";
-import Reveal from "@/components/ui/Reveal";
+import ClosingCTA from "@/components/layout/ClosingCTA";
+import ProgrammeRow from "@/components/programmes/ProgrammeRow";
 import { programmes } from "@/content/programmes";
 
 export const metadata = {
   title: "Programmes",
+  alternates: { canonical: "/programmes" },
 };
 
 /**
- * Programmes.
+ * Programmes — the catalogue.
  *
- * A ruled, numbered list rather than a grid of cards — seven cards would be
- * more furniture than content, and several programmes have no description at
- * all. In this layout a name on its own is a complete row; in a card it would
- * look broken.
+ * A NUMBERED EDITORIAL LIST, NOT A GRID OF SEVEN CARDS. The argument for the
+ * list is the content: two of these programmes have no description at all and
+ * three have a single sentence. In a card, a name on its own looks like a card
+ * that failed to load; in a ruled index it is simply a complete entry, which
+ * is what it is. The list also lets the seven titles run at display size and
+ * share one rhythm down the page, and it scales to an eighth programme without
+ * anyone thinking about a row of three.
  *
- * The gaps are real: `Individual therapy`, `Dance` and `One day events` need
- * copy from the client. Do not fill them in.
+ * Each row is a whole link to its detail page — see ProgrammeRow. The homepage
+ * carries the same index one size down and without the bodies; this is the
+ * full reading of it.
+ *
+ * ALTERNATE ROWS STEP IN by one column on desktop, so the eye travels down a
+ * shifting left edge rather than a ruler. The right edge, where the arrows
+ * are, stays put.
+ *
+ * NO INTRODUCTION under the page title, and no "how to join" block. The client
+ * supplied no overview of the programme as a whole and no joining process —
+ * not an enquiry route, not an assessment, not a waiting list — so the page
+ * says nothing about either. (This is where a `ContentPending` placeholder for
+ * admissions used to sit. It was the right marker while the page was a draft
+ * and the wrong thing to ship: a page that advertises its own gaps reads worse
+ * than a page that is simply short.) The closing band already gives the reader
+ * a way to ask.
  */
 export default function ProgrammesPage() {
   return (
@@ -28,66 +46,24 @@ export default function ProgrammesPage() {
         motifTone="teal"
       />
 
-      <Section>
-        <ol className="flex flex-col">
+      <Section spacing="md">
+        {/* Rows carry their own top rule; the list closes itself. */}
+        <ol className="border-b border-rule">
           {programmes.map((programme, index) => (
-            <Reveal
-              as="li"
-              key={programme.name}
+            <ProgrammeRow
+              key={programme.slug}
+              programme={programme}
+              showBody
+              /* Only the first few stagger. Below the fold the observer fires
+                 them one at a time anyway, and a delay there just holds an
+                 already-visible row back. */
               delay={index < 3 ? index * 90 : 0}
-              className="grid gap-y-5 border-t border-rule py-10 first:pt-0 sm:py-12 md:grid-cols-12 md:gap-x-12"
-            >
-              <div className="flex items-baseline gap-4 md:col-span-5">
-                <span
-                  aria-hidden="true"
-                  className="font-sans text-eyebrow text-ink-soft tabular-nums"
-                >
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h2 className="text-h3">{programme.name}</h2>
-              </div>
-
-              {(programme.description || programme.points) && (
-                <div className="md:col-span-7">
-                  {programme.description && (
-                    <p className="max-w-measure text-body text-ink-body">
-                      {programme.description}
-                    </p>
-                  )}
-
-                  {programme.points && (
-                    <ul
-                      className={`max-w-measure ${programme.description ? "mt-6" : ""} flex flex-col gap-3`}
-                    >
-                      {programme.points.map((point) => (
-                        <li
-                          key={point}
-                          className="flex gap-3 text-body-sm text-ink-body"
-                        >
-                          <span
-                            aria-hidden="true"
-                            className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-pill bg-gold"
-                          />
-                          {point}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              )}
-            </Reveal>
+            />
           ))}
         </ol>
       </Section>
 
-      <Section tone="purple" spacing="sm">
-        <Reveal>
-          <ContentPending
-            label="How to join"
-            note="The practical next step — enquiry, assessment, waiting list, or whatever the real process is. Nothing about admissions was supplied, so nothing is stated here."
-          />
-        </Reveal>
-      </Section>
+      <ClosingCTA />
     </>
   );
 }

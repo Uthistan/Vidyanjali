@@ -1,25 +1,52 @@
-import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
+import { DM_Sans, Fraunces } from "next/font/google";
 import Header from "@/components/layout/Header";
+import SiteLoader from "@/components/brand/SiteLoader";
 import Footer from "@/components/layout/Footer";
 import { site } from "@/content/site";
 import "./globals.css";
 
 /**
- * Display face. The Vidyanjali wordmark is a high-contrast serif with ball
- * terminals and a calligraphic V — Playfair Display sits in that same register,
- * so headings read as an extension of the logo rather than a second voice.
+ * Display face — Fraunces.
+ *
+ * A soft-serif with round bowls and low stroke contrast, chosen by setting
+ * the real copy against five other candidates and looking at the results.
+ * The full reasoning, and what it was compared with, is in globals.css under
+ * "Type families".
+ *
+ * THREE AXES ARE REQUESTED BEYOND WEIGHT, and each one is load-bearing:
+ *
+ *   opsz  the optical size. Left to `font-optical-sizing: auto` in CSS, which
+ *         reads the rendered font-size and picks the matching cut — so the
+ *         84px hero gets fine, open strokes and the 18px credential line gets
+ *         sturdy ones, with no per-tier declaration anywhere.
+ *   SOFT  terminal softness, set to 60. This is the axis that makes the face
+ *         read warm rather than merely competent, and it is why this pairing
+ *         sits with the round logo mark when the outgoing Didone did not.
+ *   WONK  the alternate angled forms, on for the large tiers and off below
+ *         h3. It is where the face gets its character.
+ *
+ * The weight range is the other half of the point. The previous display face
+ * had exactly one weight, which meant the only way to make a heading feel
+ * important was to make it enormous — the single biggest cause of the type
+ * problem this redesign is fixing.
  */
-const display = Playfair_Display({
+/* `weight` is deliberately absent. This loader rejects a range string for a
+   Google variable font — "Unknown weight 300 700 for font Fraunces" — and
+   omitting the key is what asks for the whole variable axis, which is exactly
+   what the scale in globals.css draws on. */
+const display = Fraunces({
   variable: "--font-vidyanjali-display",
   subsets: ["latin"],
+  axes: ["SOFT", "WONK", "opsz"],
   display: "swap",
 });
 
 /**
- * Body face. Geometric enough to echo the logo's letterspaced tagline caps,
- * and highly legible at the 21px body size.
+ * Text face. The variable file, so the 11px letterspaced caps can sit at 600
+ * and body copy at 400 out of one download — and so the optical-size axis
+ * thickens the small sizes rather than leaving them to fill in.
  */
-const sans = Plus_Jakarta_Sans({
+const sans = DM_Sans({
   variable: "--font-vidyanjali-sans",
   subsets: ["latin"],
   display: "swap",
@@ -44,7 +71,7 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: "#FFFDF5",
+  themeColor: "#FBF6EC",
 };
 
 export default function RootLayout({ children }) {
@@ -69,6 +96,9 @@ export default function RootLayout({ children }) {
             __html: `document.documentElement.dataset.js="true"`,
           }}
         />
+
+        {/* Above everything, but it blocks nothing — see SiteLoader.jsx. */}
+        <SiteLoader />
 
         <a
           href="#main"

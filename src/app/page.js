@@ -1,151 +1,72 @@
-import Link from "next/link";
-import Section from "@/components/layout/Section";
-import SplitBlock from "@/components/layout/SplitBlock";
-import SectionHeading from "@/components/ui/SectionHeading";
-import Button from "@/components/ui/Button";
-import Eyebrow from "@/components/ui/Eyebrow";
-import Prose from "@/components/ui/Prose";
-import Reveal from "@/components/ui/Reveal";
-import InfinityMotif from "@/components/brand/InfinityMotif";
-import { site } from "@/content/site";
-import { founders, journey, mission } from "@/content/about";
-import { programmeNames } from "@/content/programmes";
+import Hero from "@/components/home/Hero";
+import Journey from "@/components/home/Journey";
+import Mission from "@/components/home/Mission";
+import ProgrammeIndex from "@/components/home/ProgrammeIndex";
+import BeyondClassroom from "@/components/home/BeyondClassroom";
+import LifeAtVidyanjali from "@/components/home/LifeAtVidyanjali";
+import Vision from "@/components/home/Vision";
+import People from "@/components/home/People";
+import ClosingCTA from "@/components/layout/ClosingCTA";
 
 /**
  * Home.
  *
- * The arc is: who Vidyanjali is (hero) → why it exists (mission) → what it
- * offers (programmes) → who does the work (founders). Every line is the
- * client's own; see the source notes in src/content/.
+ * THE PAGE IS ONE STORY, NOT NINE SECTIONS. It was reordered around a single
+ * arc rather than around a tidy grouping of topics, and the order below is the
+ * argument:
  *
- * Two sections from the original skeleton are gone rather than filled with
- * invention: the outcome marquee ("what families begin to notice") and the
- * problem statement ("why this matters"). Neither has supplied copy. Restore
- * them from git history the day the client writes them.
+ *   1  Hero          say the one thing, then show it. A statement centred on
+ *                    cream, and a photograph the full width of the screen.
+ *   2  Journey       one sentence of history, small and quiet, deliberately
+ *                    the least loud thing on the page — because it follows the
+ *                    loudest image on it.
+ *   3  Mission       the belief, centred in cream on deep purple. The first
+ *                    edge the reader crosses, and the second invitation.
+ *   4  Programmes    what that belief actually is, as seven pillars.
+ *   5  Beyond        one of them opened out: a large photograph and two quoted
+ *                    lines, on deep teal, asymmetric and bleeding right.
+ *   6  Life          the photographic chapter — five frames, no two alike.
+ *   7  Vision        four parallel commitments, set as four, where the
+ *                    repetition of the opening word IS the rhythm.
+ *   8  People        who a child actually works with.
+ *   9  Closing       the last invitation, centred, back on deep purple.
+ *
+ * THE RHYTHM IS CARRIED BY SURFACE AND BY WEIGHT, never by a rule between
+ * sections: cream, cream, PURPLE, cream, TEAL, cream, sand, cream, PURPLE. No
+ * two saturated bands touch, no two quiet sections sit together, and every
+ * light run is broken by either a colour field or a photograph.
+ *
+ * THREE MOMENTS ARE CENTRED and only three — the hero, the mission and the
+ * programme masthead. Those are the places Vidyanjali is speaking. Everything
+ * that is a list, an index or a catalogue stays on the left rail, so the
+ * centred moments keep their weight.
+ *
+ * FOUR INVITATIONS, spaced through the page rather than saved for the end: the
+ * hero's two links, the mission's button, the programme index's closing row,
+ * and the final band.
+ *
+ * Each section is its own component under components/home/. They are all
+ * server components; the only client JavaScript on this page comes from the
+ * shared Reveal observer, the hero's ParallaxImage, and the header.
+ *
+ * Every word is the client's, drawn from src/content/. The one exception is
+ * `heroStatement`, a rewording of the mission's opening clause, kept in
+ * content/about.js with a note saying so. Section headings are structural
+ * framing and claim nothing; where a heading risked implying something
+ * unsupplied — a schedule, an outcome — it was rewritten.
  */
 export default function Home() {
   return (
     <>
-      {/* Hero — type is the hero; no background image, no overlay. */}
-      <Section spacing="lg" className="overflow-hidden">
-        <InfinityMotif
-          tone="gold"
-          figures={false}
-          className="pointer-events-none absolute -top-20 -right-32 h-112 w-auto opacity-[0.07]"
-        />
-
-        <Reveal className="relative">
-          <Eyebrow className="mb-6">{site.tagline}</Eyebrow>
-
-          {/* Trimmed from the opening clause of the client's mission — the one
-              sentence that says what the centre is for. Swap it wholesale if
-              they write a dedicated headline. */}
-          <h1 className="max-w-[20ch] text-display">
-            Empowering children with special needs to become independent,
-            confident and valued individuals.
-          </h1>
-        </Reveal>
-
-        <Reveal delay={120} className="relative">
-          <p className="mt-10 max-w-measure text-lede text-ink-body">
-            {journey[0]}
-          </p>
-
-          <div className="mt-12 flex flex-wrap items-center gap-4">
-            <Button href="/programmes" variant="primary" size="lg">
-              Our programmes
-            </Button>
-            <Button href="/about" variant="secondary" size="lg">
-              About Vidyanjali
-            </Button>
-          </div>
-        </Reveal>
-      </Section>
-
-      {/* Mission */}
-      <Section tone="purple">
-        <SplitBlock
-          heading={
-            <Reveal>
-              <SectionHeading
-                eyebrow="Mission"
-                eyebrowTone="purple"
-                title="Our mission"
-              />
-            </Reveal>
-          }
-        >
-          <Reveal delay={100}>
-            <Prose>
-              {mission.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
-            </Prose>
-          </Reveal>
-        </SplitBlock>
-      </Section>
-
-      {/* Programmes — the full list of names; descriptions live on
-          /programmes. Deliberately a static list rather than the Marquee:
-          the programmes are the offering, not decoration, and a ticker of
-          seven short names visibly repeats itself across a desktop width. */}
-      <Section tone="teal">
-        <Reveal>
-          <SectionHeading eyebrow="Programmes" title="Programmes offered" />
-        </Reveal>
-
-        <ul className="mt-14 grid sm:grid-cols-2 sm:gap-x-12 lg:grid-cols-3">
-          {programmeNames.map((name, index) => (
-            <Reveal
-              as="li"
-              key={name}
-              delay={index * 70}
-              className="border-t border-rule py-6"
-            >
-              <p className="text-h3 text-ink">{name}</p>
-            </Reveal>
-          ))}
-        </ul>
-
-        <Reveal delay={200} className="mt-14">
-          <Button href="/programmes" variant="accent">
-            See all programmes
-          </Button>
-        </Reveal>
-      </Section>
-
-      {/* Founders — names and roles only. Full biographies are on /about. */}
-      <Section>
-        <Reveal>
-          <SectionHeading eyebrow="People" title="Our founders" />
-        </Reveal>
-
-        <div className="mt-14 grid gap-x-12 gap-y-10 md:grid-cols-2">
-          {founders.map((person, index) => (
-            <Reveal key={person.name} delay={index * 100}>
-              <div className="border-t border-rule pt-8">
-                <Eyebrow className="mb-4">{person.role}</Eyebrow>
-                <h3 className="text-h3">{person.name}</h3>
-                <p className="mt-2 font-sans text-caption text-ink-soft">
-                  {person.credentials}
-                </p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-
-        <Reveal delay={200} className="mt-12">
-          <Link
-            href="/about#people"
-            className="inline-flex items-center gap-2 text-body-sm font-semibold text-purple-mid no-underline transition-[gap] duration-300 ease-out-soft hover:gap-3"
-          >
-            Meet the founders and team
-            <span aria-hidden="true">&rarr;</span>
-          </Link>
-        </Reveal>
-      </Section>
-
-      {/* Invitation — handled by the footer CTA band. */}
+      <Hero />
+      <Journey />
+      <Mission />
+      <ProgrammeIndex />
+      <BeyondClassroom />
+      <LifeAtVidyanjali />
+      <Vision />
+      <People />
+      <ClosingCTA />
     </>
   );
 }

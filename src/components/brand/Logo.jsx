@@ -67,7 +67,10 @@ function Lockup({ variant, size, priority }) {
 
       <span className="flex flex-col leading-none">
         <span
-          className={`font-display font-medium tracking-[-0.01em] text-purple ${scale.name}`}
+          /* No weight class: the display face ships only at 400, and asking
+             for 500 here made the browser synthesise a fake medium that
+             thickened the wordmark unevenly against the real mark beside it. */
+          className={`font-display tracking-[-0.01em] text-purple ${scale.name}`}
         >
           {site.name}
         </span>

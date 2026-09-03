@@ -7,6 +7,7 @@ import Person from "@/components/ui/Person";
 import Prose from "@/components/ui/Prose";
 import Reveal from "@/components/ui/Reveal";
 import { founders, journey, mission, team, vision } from "@/content/about";
+import ClosingCTA from "@/components/layout/ClosingCTA";
 
 export const metadata = {
   title: "About",
@@ -114,6 +115,8 @@ export default function AboutPage() {
           ))}
         </div>
       </Section>
+
+      <ClosingCTA />
     </>
   );
 }

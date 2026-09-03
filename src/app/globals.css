@@ -4,98 +4,211 @@
    Vidyanjali — design tokens
    Tailwind v4 is CSS-first: tokens live here, not in a config file.
 
+   THE BRIEF THIS SYSTEM ANSWERS: warm, human, premium, modern, editorial.
+   It is a special-needs education and therapy centre, so the page has to be
+   welcoming before it is impressive. The previous system read "premium" as
+   very large type on near-white paper with hairlines between everything, and
+   the result was cold — a fashion magazine, not a school.
+
+   Three deliberate corrections run through the whole file:
+
+     1. THE PAPER IS ACTUALLY CREAM. The old canvas was #FFFDF5, which is
+        white with a rumour of yellow in it. This one is #FBF6EC, warm enough
+        to read as paper, with a genuine sand band (#F3E8D6) and two saturated
+        brand bands to alternate against it. Colour carries the rhythm now;
+        the page is not one pale surface with rules drawn on it.
+     2. THE TOP OF THE TYPE SCALE CAME DOWN AND THE MIDDLE FILLED IN. 116px
+        was a stunt. 84px is a headline. The tiers between 28 and 50px, which
+        the old scale had hollowed out, are where most of a real editorial
+        page actually lives.
+     3. HIERARCHY COMES FROM WEIGHT AS WELL AS SIZE. The old display face had
+        one weight, so the only way to make anything louder was to make it
+        enormous — which is precisely how the page ended up shouting. Fraunces
+        has 300–700, so a heading can be distinct at 36px.
+
    Brand colours are read from the supplied logo: the deep purple of the
-   wordmark, the lighter purple of the left infinity loop, the blue-green
-   teal of the right loop and tagline, and the amber-gold of the arc and
-   top circle. Sampled by eye from the raster — nudge them if you have the
-   exact brand values. Every colour on the site resolves through this block.
+   wordmark, the lighter purple of the left infinity loop, the blue-green teal
+   of the right loop and tagline, and the amber-gold of the arc and top
+   circle. Every colour on the site resolves through this block.
    ============================================================ */
 
 @theme {
-  /* --- Surfaces --------------------------------------------------- */
-  --color-canvas: #fffdf5; /* warm cream — the dominant surface, never pure white */
-  --color-canvas-lift: #ffffff; /* raised cards only */
-  --color-canvas-deep: #2b1547; /* footer / closing CTA band — deep brand purple */
+  /* --- Surfaces ----------------------------------------------------
+     Four surfaces, in ascending weight, and the page alternates between them
+     rather than separating sections with rules. Every ink below is contrast-
+     checked against every surface it is actually used on; the ratios quoted
+     are measured, not estimated. */
 
-  /* --- Ink --------------------------------------------------------- */
-  --color-ink: #42206e; /* wordmark purple — headings. Replaces black. 12.4:1 on canvas. */
-  --color-ink-body: #574f61; /* warm purple-grey — body copy */
-  --color-ink-soft: #877f92; /* captions, meta, de-emphasised */
-  --color-ink-invert: #fffdf5;
+  --color-canvas: #fbf6ec; /* warm cream — the paper. Never white. */
+  --color-canvas-warm: #f3e8d6; /* sand — the second band, for warmth */
+  --color-canvas-deep: #331a52; /* deep purple — the dark band */
+  --color-teal-deep: #154c57; /* deep teal — the second dark band */
+  --color-canvas-lift: #ffffff; /* form fields and raised cards only */
 
-  /* --- Brand ------------------------------------------------------- */
+  /* --- Ink ---------------------------------------------------------- */
+  --color-ink: #42206e; /* wordmark purple — headings. 11.7:1 on canvas. */
+  --color-ink-body: #4e4557; /* warm purple-grey — body copy. 8.4:1. */
+  /* Captions and meta. 5.4:1 on canvas, 4.8:1 on sand — clears AA on both,
+     which the original #877F92 did on neither. */
+  --color-ink-soft: #6a6275;
+  --color-ink-invert: #fbf6ec; /* 13.8:1 on deep purple, 8.9:1 on deep teal */
+
+  /* --- Brand -------------------------------------------------------- */
   --color-purple: #42206e; /* wordmark */
-  --color-purple-mid: #5c2d91; /* left infinity loop — links, secondary accents */
-  --color-teal: #1d5f6b; /* right loop + tagline. 7.1:1 on canvas. */
-  --color-gold: #f5a623; /* arc + top circle. Fills only — fails AA as text. */
+  --color-purple-mid: #5c2d91; /* left infinity loop — links, accents. 8.7:1 */
+  --color-teal: #1d5f6b; /* right loop + tagline. 6.7:1 on canvas. */
+  --color-gold: #f5a623; /* arc + top circle */
+  /* Gold is 1.9:1 on cream, so as TEXT on a light surface it is unusable —
+     this is the same hue burnt down until it clears AA (5.5:1 on canvas,
+     4.9:1 on sand). Raw --color-gold stays for fills, and for text on the two
+     dark bands, where it measures 7.4:1 and 4.7:1. */
+  --color-gold-deep: #8a5a0a;
 
-  /* Soft tints — for section bands and card fills, never for text */
-  --color-purple-soft: #f4eefa;
-  --color-teal-soft: #ebf4f5;
-  --color-gold-soft: #fdf4e4;
+  /* Soft tints — interior page bands and card fills, never for text. Warmed
+     slightly from the originals so they belong to the cream rather than
+     sitting on it as three different greys. */
+  --color-purple-soft: #f3ecf8;
+  --color-teal-soft: #e8f1f2;
+  --color-gold-soft: #faefd9;
 
-  /* --- Lines ------------------------------------------------------- */
-  --color-rule: rgba(66, 32, 110, 0.13);
-  --color-rule-strong: rgba(66, 32, 110, 0.26);
+  /* --- Feedback -----------------------------------------------------
+     One colour, for form validation only. A warm brick rather than a pure
+     red, so an error message still sits inside the palette. 7.0:1 on canvas. */
+  --color-danger: #9a2c2c;
 
-  /* --- Type families ---------------------------------------------- */
-  --font-display: var(--font-vidyanjali-display), Georgia, serif;
+  /* --- Lines --------------------------------------------------------
+     Used far less than they were. A rule is now what closes a masthead or
+     divides a list — not what separates every section from the next one. */
+  --color-rule: rgba(66, 32, 110, 0.15);
+  --color-rule-strong: rgba(66, 32, 110, 0.3);
+  --color-rule-invert: rgba(251, 246, 236, 0.22);
+
+  /* --- Type families ------------------------------------------------
+     FRAUNCES + DM SANS, chosen by setting the real copy in six candidate
+     pairings and looking at them — the hero sentence, the programme names,
+     body text, the wordmark beside the actual logo mark, and all of it again
+     at 390px. The alternatives tested were Newsreader, Young Serif, Petrona,
+     Bricolage Grotesque, and the outgoing Instrument Serif as a control.
+
+     WHY FRAUNCES:
+
+     1. IT MATCHES THE MARK. The logo is round and soft — two circles, a
+        looping infinity, a gold sun. Instrument Serif is a high-contrast
+        Didone with spiked serifs and hairline joins; set next to that mark it
+        read as a different brand entirely. Fraunces is a soft-serif with
+        round bowls and low stroke contrast, and its SOFT axis rounds the
+        terminals further. The wordmark and the mark finally look drawn by the
+        same hand.
+     2. IT HAS A WEIGHT RANGE. 300–700, so the type scale does not have to
+        reach 116px to make something feel important. This is the single
+        biggest reason the page can now be calmer.
+     3. IT IS WARM WITHOUT BEING CHILDISH. Young Serif was the other warm
+        candidate and it is a beautiful face, but at wordmark size it
+        overpowered the logo — heavy slab strokes beside a delicate mark — and
+        it ships in one weight, which reintroduces the problem above.
+     4. IT SURVIVES SMALL. A programme name sets at 21px on a phone and the
+        optical-size axis thickens the strokes to suit, so it stays warm
+        rather than going fragile. Instrument Serif's hairlines broke up below
+        about 24px, which is why the old system had to ban the serif from
+        anything under h2.
+
+     opsz is left to `font-optical-sizing: auto`, which reads the rendered
+     font-size and picks the right optical cut with no per-tier declarations.
+     SOFT and WONK are set explicitly in the base layer below. */
+  --font-display: var(--font-vidyanjali-display), "Iowan Old Style", Georgia, serif;
   --font-sans: var(--font-vidyanjali-sans), ui-sans-serif, system-ui, sans-serif;
 
-  /* --- Type scale --------------------------------------------------
-     Mirrors the audited fourcups.co hierarchy: tight leading and negative
-     tracking on headings, generous 21px body at 1.6. Fluid via clamp()
-     rather than the reference's duplicated per-breakpoint markup. */
+  /* --- Type scale ---------------------------------------------------
+     Range is roughly 8:1 top to bottom, against the old 10.5:1 — and, more
+     importantly, the middle is populated. The old scale jumped 34 → 21px with
+     nothing in between, which is why every section that was not a giant
+     statement collapsed into looking like body copy.
 
-  --text-display: clamp(2.5rem, 1.6rem + 4.5vw, 3.75rem); /* 40 → 60px */
-  --text-display--line-height: 1.05;
-  --text-display--letter-spacing: -0.03em;
-  --text-display--font-weight: 600;
+     Tier names are unchanged so that pages outside the redesigned homepage
+     inherit the new system instead of breaking. */
 
-  --text-h1: clamp(2.25rem, 1.75rem + 2.5vw, 2.9375rem); /* 36 → 47px */
-  --text-h1--line-height: 1.1;
-  --text-h1--letter-spacing: -0.025em;
-  --text-h1--font-weight: 600;
+  /* 40 → 70px. Measured, not guessed: the hero column is 7 of 12 columns of a
+     capped 1120px container, so above about 1280px the COLUMN stops growing
+     while a vw-scaled size keeps going. At the previous 84px ceiling the
+     statement set in seven lines at 1440 and ran within 23px of the fold on a
+     1512×860 laptop — the sentence was being cropped by the viewport rather
+     than composed against it. Line counts were measured directly at this
+     column width: 72px and above gives 7 lines, 66–70px gives 6, 64px and
+     below gives 5. 70px is the top of the six-line band. */
+  --text-hero: clamp(2.5rem, 4.8vw, 4.375rem); /* 40 → 70px */
+  --text-hero--line-height: 1;
+  --text-hero--letter-spacing: -0.025em;
+  --text-hero--font-weight: 400;
 
-  --text-h2: clamp(2rem, 1.7rem + 1.5vw, 2.5rem); /* 32 → 40px */
-  --text-h2--line-height: 1.1;
-  --text-h2--letter-spacing: -0.02em;
-  --text-h2--font-weight: 600;
+  --text-statement: clamp(2rem, 4.1vw, 3.75rem); /* 32 → 60px */
+  --text-statement--line-height: 1.06;
+  --text-statement--letter-spacing: -0.022em;
+  --text-statement--font-weight: 400;
 
-  --text-h3: clamp(1.3125rem, 1.2rem + 0.6vw, 1.5rem); /* 21 → 24px */
-  --text-h3--line-height: 1.25;
-  --text-h3--letter-spacing: -0.02em;
+  /* Programme names. A step under `statement`, so a chapter title and the
+     mission statement cannot read as the same order of thing. */
+  --text-title: clamp(1.875rem, 3.4vw, 3.125rem); /* 30 → 50px */
+  --text-title--line-height: 1.05;
+  --text-title--letter-spacing: -0.022em;
+  --text-title--font-weight: 400;
+
+  --text-display: clamp(1.75rem, 2.9vw, 2.625rem); /* 28 → 42px */
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.02em;
+  --text-display--font-weight: 400;
+
+  /* h1 and h2 carry 500 rather than 400. At these sizes the face needs a
+     little more body to hold its own against a 19px sans paragraph, and
+     having the weight available is the whole reason this face was chosen. */
+  --text-h1: clamp(1.625rem, 2.4vw, 2.25rem); /* 26 → 36px */
+  --text-h1--line-height: 1.14;
+  --text-h1--letter-spacing: -0.018em;
+  --text-h1--font-weight: 500;
+
+  --text-h2: clamp(1.375rem, 1.8vw, 1.75rem); /* 22 → 28px */
+  --text-h2--line-height: 1.2;
+  --text-h2--letter-spacing: -0.015em;
+  --text-h2--font-weight: 500;
+
+  /* The first sans tier — see the note on the serif cut-off below. */
+  --text-h3: clamp(1.125rem, 1.1vw, 1.3125rem); /* 18 → 21px */
+  --text-h3--line-height: 1.35;
+  --text-h3--letter-spacing: -0.012em;
   --text-h3--font-weight: 600;
 
-  --text-lede: clamp(1.1875rem, 1.1rem + 0.5vw, 1.4375rem); /* 19 → 23px */
-  --text-lede--line-height: 1.55;
-  --text-lede--letter-spacing: -0.015em;
+  --text-lede: clamp(1.125rem, 1.2vw, 1.4375rem); /* 18 → 23px */
+  --text-lede--line-height: 1.5;
+  --text-lede--letter-spacing: -0.01em;
 
-  --text-body: 1.3125rem; /* 21px — the signature body size */
-  --text-body--line-height: 1.6;
-  --text-body--letter-spacing: -0.015em;
+  --text-body: clamp(1.0625rem, 0.8vw, 1.1875rem); /* 17 → 19px */
+  --text-body--line-height: 1.65;
+  --text-body--letter-spacing: -0.006em;
 
-  --text-body-sm: 1.0625rem; /* 17px */
+  --text-body-sm: 1rem; /* 16px */
   --text-body-sm--line-height: 1.6;
-  --text-body-sm--letter-spacing: -0.01em;
+  --text-body-sm--letter-spacing: -0.004em;
 
-  --text-caption: 0.9375rem; /* 15px */
-  --text-caption--line-height: 1.55;
+  --text-caption: 0.875rem; /* 14px */
+  --text-caption--line-height: 1.5;
 
-  --text-eyebrow: 0.75rem; /* 12px */
-  --text-eyebrow--line-height: 2;
-  --text-eyebrow--letter-spacing: 0.16em;
+  /* 11px, tracked wide. Tracking pulled back from 0.2em to 0.18em: at 0.2 the
+     longer labels started to read as separated letters rather than a word. */
+  --text-eyebrow: 0.6875rem; /* 11px */
+  --text-eyebrow--line-height: 1.7;
+  --text-eyebrow--letter-spacing: 0.18em;
   --text-eyebrow--font-weight: 600;
 
-  /* --- Layout ------------------------------------------------------ */
+  /* --- Layout ------------------------------------------------------- */
   --container-page: 70rem; /* 1120px — the content column */
   --container-measure: 34rem; /* ~544px — paragraph measure */
 
-  /* --- Radii ------------------------------------------------------- */
-  --radius-card: 1.5rem;
+  /* --- Radii --------------------------------------------------------
+     Radius is used on form fields and the CTA pill and essentially nowhere
+     else. Rounded cards everywhere was on the list of things not to do. */
+  --radius-card: 1rem;
   --radius-pill: 999px;
 
-  /* --- Motion ------------------------------------------------------ */
+  /* --- Motion -------------------------------------------------------- */
   --ease-out-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
   --animate-marquee: marquee 42s linear infinite;
 }
@@ -125,7 +238,7 @@
     font-family: var(--font-sans);
     font-size: var(--text-body);
     line-height: 1.6;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.012em;
   }
 
   h1,
@@ -136,25 +249,71 @@
     text-wrap: balance;
   }
 
-  /* Bind the display face to the heading SIZES, not just to heading tags.
-     Tailwind's --text-* tokens can carry weight and tracking but not a family,
-     so without this a `text-h2` on a <p> or <div> silently falls back to the
-     body face. Declared in the base layer, so a `font-sans` utility still
-     overrides it where a heading size is wanted in the body face. */
-  h1,
-  h2,
-  h3,
-  h4,
-  .text-display,
-  .text-h1,
-  .text-h2,
-  .text-h3 {
-    font-family: var(--font-display);
+  /* Headings carry their colour directly, so on a dark band they would stay
+     purple even though the surrounding text had been inverted — inheritance
+     never reaches them. `on-dark` is applied by Section's two dark tones and
+     by the closing band, and flips the whole heading set in one place rather
+     than making every dark composition remember a `text-ink-invert` on each
+     individual heading. */
+  .on-dark h1,
+  .on-dark h2,
+  .on-dark h3,
+  .on-dark h4 {
+    color: var(--color-ink-invert);
   }
 
-  /* A single, consistent focus treatment across every interactive element. */
+  /* Bind the display face to the heading SIZES, not to the heading TAGS.
+     Tailwind's --text-* tokens can carry weight and tracking but not a family,
+     so without this a `text-hero` on a <p> silently falls back to the body
+     face. Declared in the base layer, so a `font-sans` utility still overrides
+     it where a display size is wanted in the text face.
+
+     THE CUT-OFF IS h2. Below it the sizes are structural labels — a person's
+     credentials, a form legend — and those want the neutrality of the sans.
+     The reason is no longer that the serif breaks up small: Fraunces holds at
+     18px perfectly well, and `.font-display` is available for the places that
+     genuinely want it (the wordmark, the index numerals). It is an editorial
+     decision about what the serif is FOR, not a technical limit.
+
+     SOFT 60 rounds the terminals — the axis that makes this face read warm
+     rather than merely competent. WONK 1 swaps in the alternate angled
+     italic-ish forms on the large tiers, which is where the face gets its
+     character; the smaller tiers below set WONK 0 so a 28px subhead stays
+     quiet. opsz is deliberately absent from both: naming it here would
+     disable `font-optical-sizing: auto`, and the automatic optical cut is one
+     of the main reasons this face was picked. */
+  .font-display,
+  .text-hero,
+  .text-statement,
+  .text-title,
+  .text-display,
+  .text-h1,
+  .text-h2 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+    font-variation-settings: "SOFT" 60, "WONK" 1;
+  }
+
+  .text-h1,
+  .text-h2,
+  .font-display-quiet {
+    font-variation-settings: "SOFT" 60, "WONK" 0;
+  }
+
+  /* Balancing helps a two- or three-line heading and hurts a five-line
+     statement — the browser gives up above its line cap and, below it, evens
+     out lines that were meant to fall where they fall. */
+  .text-hero,
+  .text-statement,
+  .text-title {
+    text-wrap: pretty;
+  }
+
+  /* A single, consistent focus treatment across every interactive element.
+     Gold rather than teal: it is the one brand colour that stays visible on
+     the cream, the sand, the deep purple and the deep teal alike. */
   :focus-visible {
-    outline: 2px solid var(--color-teal);
+    outline: 2px solid var(--color-gold);
     outline-offset: 3px;
     border-radius: 2px;
   }
@@ -184,8 +343,8 @@
    ============================================================ */
 
 @layer components {
-  /* The signature CTA interaction from the audit: on hover a colour fill
-     sweeps upward from the bottom edge while the label swaps colour. */
+  /* The signature CTA interaction: on hover a colour fill sweeps upward from
+     the bottom edge while the label swaps colour. */
   .btn-sweep {
     position: relative;
     isolation: isolate;
@@ -214,16 +373,87 @@
     }
   }
 
-  /* Scroll-reveal. The hidden start state is scoped to [data-js="true"],
-     which the inline script in layout.js sets before first paint. Without
-     JS the rule never matches, so content renders plainly rather than
-     staying stuck at opacity 0. Reveal.jsx then flips [data-revealed]. */
+  /* --- Editorial bleeds -------------------------------------------------
+     A block that starts on the page's content edge and runs unbroken off one
+     side of the screen.
+
+     WHY THEY EXIST. Everything on this site sits in one 1120px column, and an
+     element that stops politely at that column's edge always reads as "a
+     thing placed in a section". Letting a photograph or a colour field get
+     cut off by the screen instead is the difference between a layout and a
+     composition. The site has three: the hero's sand field runs off the left,
+     the hero photograph runs off the right, and the journey photograph runs
+     off the left one screen further down.
+
+     The padding on the closed side reproduces Container's own content edge:
+     half the leftover width, plus Container's gutter. Deliberately `100%` and
+     not `100vw` — 100vw includes the scrollbar, which would push the row a
+     scrollbar's width too wide and give the whole page a horizontal scroll.
+     Only above `lg`, because below it the compositions stack and a bleed is
+     just an element with one margin missing. */
+  .page-bleed-right {
+    padding-left: 1.5rem;
+  }
+
+  .page-bleed-left {
+    padding-right: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .page-bleed-right {
+      padding-left: 2rem;
+    }
+
+    .page-bleed-left {
+      padding-right: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .page-bleed-right {
+      padding-left: calc((100% - min(100%, var(--container-page))) / 2 + 2.5rem);
+    }
+
+    .page-bleed-left {
+      padding-right: calc((100% - min(100%, var(--container-page))) / 2 + 2.5rem);
+    }
+  }
+
+  /* --- Index row hover ------------------------------------------------
+     There is no fill any more. A sand band wiping the full width of the
+     screen behind a row read as a UI affordance — a menu item highlighting —
+     rather than as an editorial index responding to the reader. What happens
+     now is entirely typographic and lives in the components as utilities: the
+     row's hairline turns gold, the name goes teal, the numeral moves from
+     teal to the deep gold, the arrow travels, and any photograph in the row
+     settles up a per cent or two. Five small changes and no coloured
+     rectangle. */
+
+  /* ============================================================
+     MOTION SYSTEM
+
+     One primitive — `.reveal` — with four variants, all driven by the same
+     IntersectionObserver in Reveal.jsx flipping [data-revealed] once.
+
+       (default)  rise    text and blocks: fade up 1.5rem
+       fade               fade only, no movement — for anything already in place
+       mask               images: a wipe up from the bottom edge
+       scale              images: a slow settle out of a 4% overscale
+
+     Everything hidden here is scoped to [data-js="true"], which the inline
+     script in layout.js sets before first paint. Without JS the rules never
+     match and content renders plainly rather than staying at opacity 0.
+
+     `prefers-reduced-motion` is honoured in CSS rather than in JS so that it
+     holds even if the query flips mid-transition.
+     ============================================================ */
+
   [data-js="true"] .reveal {
     opacity: 0;
     transform: translate3d(0, 1.5rem, 0);
     transition:
-      opacity 0.7s var(--ease-out-soft),
-      transform 0.7s var(--ease-out-soft);
+      opacity var(--reveal-duration, 0.7s) var(--ease-out-soft),
+      transform var(--reveal-duration, 0.7s) var(--ease-out-soft);
     transition-delay: var(--reveal-delay, 0ms);
   }
 
@@ -232,11 +462,249 @@
     transform: translate3d(0, 0, 0);
   }
 
+  /* fade — no travel. */
+  [data-js="true"] .reveal[data-reveal="fade"] {
+    transform: none;
+  }
+
+  /* mask — the image is already fully opaque and in place; what animates is
+     the window onto it. Reads as the photograph being uncovered rather than
+     flown in, which is the calmer of the two.
+
+     THE CLIP IS ON AN INNER LAYER, NOT ON THE OBSERVED ELEMENT. Chrome
+     applies a target's own clip-path when it computes an IntersectionObserver
+     entry, so clipping the observed element to zero height makes it report a
+     ratio of 0 — it never intersects, never reveals, and stays clipped
+     forever. Every photograph on the site would be permanently invisible.
+     Measured: the same element centred in the viewport reports ratio 0 with
+     the clip applied and ratio 1 without it.
+
+     Opacity is safe to put on the observed element, which is why the `rise`
+     and `scale` variants can do exactly that — IntersectionObserver ignores
+     opacity and visibility, but not clipping. */
+  [data-js="true"] .reveal[data-reveal="mask"] {
+    opacity: 1;
+    transform: none;
+  }
+
+  [data-js="true"] .reveal[data-reveal="mask"] .reveal-clip {
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path var(--reveal-duration, 1s) var(--ease-out-soft);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  [data-js="true"] .reveal[data-reveal="mask"][data-revealed="true"] .reveal-clip {
+    clip-path: inset(0 0 0 0);
+  }
+
+  /* scale — pairs with mask on the same element. The media overscales
+     slightly and settles as the mask opens, so the frame and its contents
+     move at different rates. Duration is deliberately longer than the mask's
+     so the settle outlasts the wipe. */
+  [data-js="true"] .reveal[data-reveal="mask"] .reveal-media,
+  [data-js="true"] .reveal[data-reveal="scale"] .reveal-media {
+    transform: scale(1.04);
+    transition: transform calc(var(--reveal-duration, 1s) * 1.4)
+      var(--ease-out-soft);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  [data-js="true"] .reveal[data-reveal="mask"][data-revealed="true"] .reveal-media,
+  [data-js="true"] .reveal[data-reveal="scale"][data-revealed="true"] .reveal-media {
+    transform: scale(1);
+  }
+
+  [data-js="true"] .reveal[data-reveal="scale"] {
+    opacity: 0;
+  }
+
+  [data-js="true"] .reveal[data-reveal="scale"][data-revealed="true"] {
+    opacity: 1;
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    [data-js="true"] .reveal {
+    [data-js="true"] .reveal,
+    [data-js="true"] .reveal[data-reveal="mask"],
+    [data-js="true"] .reveal[data-reveal="scale"] {
       opacity: 1;
       transform: none;
       transition: none;
     }
+
+    [data-js="true"] .reveal[data-reveal="mask"] .reveal-clip {
+      clip-path: none;
+      transition: none;
+    }
+
+    [data-js="true"] .reveal .reveal-media {
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* --- Photograph hover zoom -------------------------------------------
+     Applied to the CLIP layer, not to the media.
+
+     The media's transform is already owned by the mask reveal above, and that
+     rule — `[data-js="true"] .reveal[data-reveal="mask"][data-revealed="true"]
+     .reveal-media` — outranks any utility class by a mile. A `hover:scale-105`
+     on the image would therefore compile fine, ship, and silently do nothing.
+     The clip layer carries no transform of its own, so it is the free surface.
+
+     Once revealed the clip is `inset(0 0 0 0)`, i.e. the full box, so scaling
+     it scales the photograph; the frame's own overflow-hidden does the
+     cropping. */
+
+  .photo-zoom .reveal-clip {
+    transition: transform 900ms var(--ease-out-soft);
+  }
+
+  .photo-zoom:hover .reveal-clip,
+  .photo-zoom:focus-within .reveal-clip {
+    transform: scale(1.035);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .photo-zoom .reveal-clip,
+    .photo-zoom:hover .reveal-clip,
+    .photo-zoom:focus-within .reveal-clip {
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* --- Parallax --------------------------------------------------------
+     ParallaxImage writes a pixel offset into --parallax-y on scroll. The
+     transform lives here rather than in a style attribute so that the
+     reduced-motion override below can win without the component re-rendering.
+
+     The media is scaled up by the same proportion it is allowed to travel,
+     so the frame never shows an empty edge at the extremes of the range. */
+
+  .parallax-media {
+    transform: translate3d(0, var(--parallax-y, 0px), 0) scale(1.12);
+    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .parallax-media {
+      transform: none;
+      will-change: auto;
+    }
+  }
+
+  /* --- Carousel --------------------------------------------------------
+     Native scroll-snap: the track is a real scroll container, so touch
+     swipe, trackpad, keyboard and screen-reader navigation all work with no
+     JS at all. The buttons in PhotoCarousel.jsx only call scrollBy(). */
+
+  .snap-track {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .snap-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* --- Brand motif draw-on --------------------------------------------- */
+
+  .motif-draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: motif-draw 1150ms var(--ease-out-soft) forwards;
+  }
+
+  .motif-dots {
+    opacity: 0;
+    animation: motif-dots 500ms var(--ease-out-soft) 700ms forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .motif-draw {
+      stroke-dashoffset: 0;
+      animation: none;
+    }
+
+    .motif-dots {
+      opacity: 1;
+      animation: none;
+    }
+  }
+
+  /* --- Site loader -----------------------------------------------------
+     Non-blocking by construction: the page renders underneath at full size
+     and this is a fixed sheet on top of it, so nothing is waiting on the
+     loader to finish and there is no layout shift when it goes.
+
+     The [data-loader="done"] gate is set on <html> — by the inline script in
+     SiteLoader.jsx for repeat views and reduced motion, or by the component
+     itself after the animation. Because the gate is an attribute rather than
+     React state, a repeat visitor never sees a frame of the loader. */
+
+  .site-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    background-color: var(--color-canvas);
+    transition:
+      opacity 0.5s var(--ease-out-soft),
+      visibility 0.5s;
+  }
+
+  [data-loader="done"] .site-loader {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .site-loader__word {
+    opacity: 0;
+    animation: loader-in 600ms var(--ease-out-soft) 250ms forwards;
+  }
+
+  .site-loader__tagline {
+    opacity: 0;
+    animation: loader-in 600ms var(--ease-out-soft) 450ms forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-loader {
+      transition: none;
+    }
+
+    .site-loader__word,
+    .site-loader__tagline {
+      opacity: 1;
+      animation: none;
+    }
+  }
+}
+
+@keyframes motif-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes motif-dots {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes loader-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.5rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 }

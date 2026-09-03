@@ -25,6 +25,24 @@ export const mission = [
 ];
 
 /**
+ * The homepage headline.
+ *
+ * NOT new copy. It is the opening clause of `mission[0]` — "…empower children
+ * with special needs to become independent, confident and valued individuals"
+ * — lifted out and put into the present participle so it stands alone as a
+ * statement rather than reading as a sentence fragment. The trailing "in the
+ * world, just like everyone" is dropped because at display size the line
+ * needs to land, and the full mission is set out in full further down the
+ * page anyway.
+ *
+ * This is the one line on the site that is a rewording rather than a
+ * quotation, and it is here rather than inline in the component so that it is
+ * obvious and easy to replace. If the client writes a real headline, swap it.
+ */
+export const heroStatement =
+  "Empowering children with special needs to become independent, confident and valued individuals.";
+
+/**
  * The four vision statements, kept as separate lines because that is how they
  * were written — four parallel "To ..." clauses, not one paragraph.
  */
@@ -34,12 +52,6 @@ export const vision = [
   "To enable every child to become an active and valued member of society.",
   "To be a trusted centre of excellence that transforms every child.",
 ];
-
-/**
- * The heading of the closing footer band. A verbatim vision statement — the
- * shortest of the four, because the band sets it at display size.
- */
-export const closingStatement = vision[3];
 
 export const founders = [
   {

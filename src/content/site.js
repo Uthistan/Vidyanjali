@@ -7,8 +7,6 @@
  * Do not add invented copy anywhere; wait for the client's words.
  */
 
-import { closingStatement } from "./about";
-
 export const site = {
   name: "Vidyanjali",
   /* From the supplied logo lockup. NOTE: the client's content says the centre
@@ -23,22 +21,61 @@ export const site = {
   url: "https://vidyanjali.org",
 };
 
-/** Primary navigation. Order matters — this drives header and footer. */
-export const navItems = [
+/**
+ * Header navigation. Deliberately three items.
+ *
+ * `Get Involved` is NOT here. Its page is still two `ContentPending` blocks —
+ * volunteering, partnerships and donations have not been confirmed — and a
+ * header link is a promise that something is behind it. The route still works
+ * and still appears in the footer and the sitemap, so nothing is orphaned;
+ * it just is not advertised until it has content. Promote it the day it does.
+ */
+export const primaryNav = [
+  { label: "About", href: "/about" },
+  { label: "Programmes", href: "/programmes" },
+  { label: "Contact", href: "/contact" },
+];
+
+/** The header's single call to action. */
+export const navCta = { label: "Enquire", href: "/contact" };
+
+/**
+ * Every public route. The footer and the sitemap read from this, so an
+ * unfinished page stays reachable and indexable without being promoted.
+ */
+export const allRoutes = [
   { label: "About", href: "/about" },
   { label: "Programmes", href: "/programmes" },
   { label: "Get Involved", href: "/get-involved" },
-  { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
 
 /**
- * The closing CTA in the footer. The heading is a verbatim Vidyanjali vision
- * statement — see `vision` in about.js.
+ * The closing invitation, used by `ClosingCTA`.
+ *
+ * This used to reuse the fourth vision statement. That broke as soon as the
+ * homepage and /about both set out all four visions in full: the closing band
+ * then repeated, word for word, a line the reader had already passed a couple
+ * of screens earlier. Every one of the four had the same problem, so there was
+ * no vision statement left to borrow.
+ *
+ * The line below is therefore WRITTEN, not quoted — one of only two on the
+ * site, the other being `heroStatement` in about.js.
+ *
+ * IT IS DELIBERATELY FLAT. The previous wording, "Come and talk to us about
+ * your child.", was flagged and withdrawn: "come and talk to us" implies a
+ * conversation the centre has not said it offers, and "your child" presumes a
+ * reader who already has a child in mind for a place. The replacement names
+ * the organisation and the action and nothing else — no service, no outcome,
+ * no admissions process, no appointment, no figure. There is nothing in it
+ * for the client to have to stand behind. Replace it the moment they write
+ * their own.
  */
 export const footerCta = {
-  heading: closingStatement,
-  action: "Get in touch",
+  heading: "Get in touch with Vidyanjali.",
+  /* "Get in touch" as the button under a heading that already says exactly
+     that read as a stutter, so the button now names the destination instead. */
+  action: "Contact us",
   href: "/contact",
 };
 

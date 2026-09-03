@@ -11,7 +11,7 @@ npm run lint
 
 ## Current state
 
-**Home, About and Programmes carry the client's real content. Get Involved, Blog and the contact
+**Home, About and Programmes carry the client's real content. Get Involved and the contact
 details do not.**
 
 Every word on the built pages comes from the client's supplied content document and lives in
@@ -20,7 +20,7 @@ admission process or contact details. The remaining unbuilt regions render a con
 `<ContentPending>` block describing exactly what copy belongs there. Delete each one as the
 real content lands.
 
-Still awaiting content: **`/get-involved`**, **`/blog`**, the **contact details**, and **how to
+Still awaiting content: **`/get-involved`**, the **contact details**, and **how to
 join** on `/programmes`. Three programmes (`Individual therapy`, `Dance`, `One day events`) have
 a name but no description — they render as a name alone, deliberately.
 
@@ -91,8 +91,9 @@ script in `layout.js`. Without JS, content renders plainly instead of staying at
   Confirm which name the site should lead with, and whether the tagline still stands.
 - **Photography.** The people sections are text-led because no portraits were supplied. `Person`
   has a documented slot for them.
-- **Blog** (`/blog`) has a route but no content pipeline. MDX files in the repo (developer edits,
-  simplest) or a CMS (client edits, more setup) — this needs a decision before it can be built.
+- **Blog.** The route and its nav entry have been removed. If writing is wanted later it needs a
+  content pipeline decision first: MDX files in the repo (developer edits, simplest) or a CMS
+  (client edits, more setup).
 - **Contact form** is not built. It needs somewhere for submissions to go and a spam-handling
   approach.
 - **`/get-involved`** — confirm which of volunteering, partnerships and donations Vidyanjali

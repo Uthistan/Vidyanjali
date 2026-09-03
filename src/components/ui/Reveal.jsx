@@ -3,20 +3,37 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Fade-and-rise on scroll into view — the one section-level animation the
- * reference site uses. Deliberately dependency-free: an IntersectionObserver
- * and two CSS custom properties do everything a motion library would here.
+ * The site's one scroll animation, in four flavours.
  *
- * The hidden start state lives in globals.css scoped to [data-js="true"], so
- * users without JS see content immediately rather than a blank page.
- * `prefers-reduced-motion` is handled in CSS, so it holds even mid-transition.
+ * Deliberately dependency-free: an IntersectionObserver and a handful of CSS
+ * custom properties do everything a motion library would here. The observer
+ * disconnects on first intersection, so an element animates once and then
+ * costs nothing — content does not re-animate when scrolled back past.
  *
+ * The visual states all live in globals.css under MOTION SYSTEM. This file
+ * only decides WHEN. That split is what keeps `prefers-reduced-motion` honest:
+ * it is enforced in CSS, so it holds even if the setting changes mid-scroll,
+ * and it cannot be defeated by a component forgetting to check.
+ *
+ * The hidden start state is scoped to [data-js="true"] — set by the inline
+ * script in layout.js before first paint — so with JS off or still loading,
+ * everything renders plainly instead of sitting invisible at opacity 0.
+ *
+ * @param {"rise"|"fade"|"mask"|"scale"} [props.variant]
+ *   rise:  fade up 1.5rem. The default; for text and blocks.
+ *   fade:  opacity only, no travel.
+ *   mask:  a wipe up from the bottom edge, with the media settling out of a
+ *          slight overscale. For photographs. Needs `reveal-media` on the img.
+ *   scale: the overscale settle without the wipe.
  * @param {number} [props.delay] - stagger, in ms.
- * @param {string} [props.as] - element to render, defaults to div.
+ * @param {number} [props.duration] - override, in ms.
+ * @param {string} [props.as] - element to render. Defaults to div.
  */
 export default function Reveal({
   as: Tag = "div",
+  variant = "rise",
   delay = 0,
+  duration,
   className = "",
   children,
   ...rest
@@ -56,12 +73,17 @@ export default function Reveal({
     return () => observer.disconnect();
   }, []);
 
+  const style = {};
+  if (delay) style["--reveal-delay"] = `${delay}ms`;
+  if (duration) style["--reveal-duration"] = `${duration}ms`;
+
   return (
     <Tag
       ref={ref}
       className={`reveal ${className}`}
+      data-reveal={variant === "rise" ? undefined : variant}
       data-revealed="false"
-      style={delay ? { "--reveal-delay": `${delay}ms` } : undefined}
+      style={Object.keys(style).length > 0 ? style : undefined}
       {...rest}
     >
       {children}
