@@ -1,110 +1,92 @@
 import Section from "@/components/layout/Section";
 import Reveal from "@/components/ui/Reveal";
-import ImageReveal from "@/components/ui/ImageReveal";
 import Eyebrow from "@/components/ui/Eyebrow";
+import LifeGallery from "@/components/home/LifeGallery";
 import { photos } from "@/content/photos";
+import { programmes } from "@/content/programmes";
 
 /**
- * The page's photographic chapter — five frames, no two the same size.
+ * The page's photographic chapter, as a filterable bento grid.
  *
- * NOT A GALLERY AND NOT A GRID OF TILES. Every frame keeps a ratio close to
- * its own source crop, the column spans differ, and three of the five are
- * pushed down so no two tops line up. Matched tiles turn photographs into
- * product shots; these are documentary pictures of real sessions and the
- * layout should not tidy them.
+ * WHY A GRID YOU CAN SORT. With two deliveries there are now twenty-odd
+ * usable photographs, and a parent looking at this section is usually asking
+ * one specific question: what do they actually do all day? The filter chips
+ * answer that directly — learning, outdoors, out and about, dance, festivals —
+ * and the counts beside them show how much there is before a click.
  *
- * IT CARRIES FIVE OF THE TEN USABLE FRAMES, which is the most it can honestly
- * hold. Three of the ten masters are the same clay session and the photo audit
- * is explicit that they must not all appear together — two are here and the
- * third is left out. `sharedTable` is left out too: it is a soft video frame
- * that does not hold above about 450px, and padding a mosaic with a weak image
- * costs more than the extra frame is worth.
+ * ROUNDED, SOFT, AND BRIGHT. Tiles are generously rounded and captions sit on
+ * a cream pill ON the photograph rather than in a line of grey type beneath
+ * it — warm and legible, the register families expect from a children's
+ * centre. The pill is opaque cream, so the caption's contrast never depends
+ * on the picture behind it.
  *
- * THE HEADING IS A SHORT ROW, NOT A COLUMN. See the note in the markup: a
- * label set beside the photographs left five-sixths of its rail empty, and no
- * alignment fixed that — the column was simply the wrong shape for two lines
- * of type.
+ * "ALL" IS CURATED, NOT EVERYTHING. It opens on the `featured` frames plus a
+ * programmes tile, and "Show all photos" appends the rest. A category shows
+ * its whole set. The hero frame (`beachSlide`) is left out so it is not
+ * repeated a screen later; `sharedTable` and `clayWorkDetail` stay out as the
+ * photo audit asks.
  *
  * CAPTIONS state what is in the picture and nothing else. No child is named,
  * no activity is claimed that the frame does not show, and none of them
- * asserts a therapeutic outcome.
+ * asserts a therapeutic outcome. See the ALT TEXT RULE in content/photos.js.
  */
 
-/* The mosaic. `span` is the desktop column span, `push` a top offset so that
-   no two frames in a row begin at the same height, and the spans deliberately
-   do not add up to a tidy row — the gap left at column nine in the second row
-   is what keeps the block from reading as a grid. */
-const FRAMES = [
-  {
-    photo: photos.oneToOneSession,
-    ratio: "landscape",
-    caption: "Working through a notebook, one to one.",
-    span: "lg:col-span-7",
-    push: "",
-    sizes: "(min-width: 1024px) 56vw, (min-width: 640px) 48vw, 100vw",
-  },
-  {
-    photo: photos.atTheWindow,
-    ratio: "tall",
-    caption: "A window onto the trees.",
-    span: "lg:col-span-4 lg:col-start-9",
-    push: "lg:mt-24",
-    sizes: "(min-width: 1024px) 32vw, (min-width: 640px) 48vw, 100vw",
-  },
-  {
-    photo: photos.clayWork,
-    ratio: "tall",
-    caption: "Shaping clay on the floor.",
-    span: "lg:col-span-4",
-    push: "lg:mt-14",
-    sizes: "(min-width: 1024px) 32vw, (min-width: 640px) 48vw, 100vw",
-  },
-  {
-    photo: photos.clayInHand,
-    ratio: "portrait",
-    caption: "A finished piece, modelled in clay.",
-    span: "lg:col-span-3 lg:col-start-6",
-    push: "lg:mt-40",
-    sizes: "(min-width: 1024px) 24vw, (min-width: 640px) 48vw, 100vw",
-  },
-  {
-    photo: photos.festivalRangoli,
-    ratio: "square",
-    caption: "A rangoli laid for a festival day.",
-    span: "lg:col-span-3 lg:col-start-10",
-    push: "lg:mt-4",
-    sizes: "(min-width: 1024px) 24vw, (min-width: 640px) 48vw, 100vw",
-  },
+const CATEGORIES = [
+  { id: "learning", label: "Learning", dot: "bg-purple-mid" },
+  { id: "outdoors", label: "Outdoors", dot: "bg-teal" },
+  { id: "out", label: "Out & about", dot: "bg-gold" },
+  { id: "dance", label: "Dance", dot: "bg-purple" },
+  { id: "festivals", label: "Festivals", dot: "bg-gold-deep" },
+];
+
+/* Order is the order "All" shows them in. `shape` overrides the grid's
+   rotating pattern where a frame's own proportions demand it — the two
+   landscape masters must run wide or they lose their subject. */
+const ITEMS = [
+  { photo: photos.walkingTogether, category: "out", caption: "Walking up together", featured: true },
+  { photo: photos.danceClass, category: "dance", caption: "Arms up in the studio", featured: true },
+  { photo: photos.atTheWindow, category: "learning", caption: "A window onto the trees", featured: true },
+  { photo: photos.clayInHand, category: "learning", caption: "A finished clay piece", featured: true },
+  { photo: photos.parkDay, category: "outdoors", caption: "Park day", featured: true, shape: "wide" },
+  { photo: photos.festivalPair, category: "festivals", caption: "Dressed for a festival", featured: true },
+  { photo: photos.sandAndSky, category: "outdoors", caption: "Lying in the sand", featured: true },
+  { photo: photos.oneToOneSession, category: "learning", caption: "Working one to one", featured: true, shape: "wide" },
+  { photo: photos.busWindow, category: "out", caption: "Watching from the bus", featured: true },
+  { photo: photos.beachClimbing, category: "outdoors", caption: "Up the climbing wall", featured: true },
+
+  { photo: photos.clayWork, category: "learning", caption: "Shaping clay on the floor" },
+  { photo: photos.sensoryBlocks, category: "learning", caption: "Reaching for wooden blocks" },
+  { photo: photos.festivalPookalam, category: "festivals", caption: "A pookalam for the festival" },
+  { photo: photos.danceStudio, category: "dance", caption: "At the barre" },
+  { photo: photos.beachShelter, category: "outdoors", caption: "Looking out from the shelter" },
+  { photo: photos.festivalAltar, category: "festivals", caption: "Pots and peacock feathers" },
+  { photo: photos.busRide, category: "out", caption: "On the bus" },
+  { photo: photos.parkTree, category: "outdoors", caption: "Up in a tree" },
+  { photo: photos.danceBarre, category: "dance", caption: "A rest on the barre" },
+  { photo: photos.beachSwing, category: "outdoors", caption: "On the swings by the sea" },
+  { photo: photos.festivalRangoli, category: "festivals", caption: "A floral rangoli" },
+  { photo: photos.parkPath, category: "outdoors", caption: "A shaded path" },
+  { photo: photos.parkRest, category: "outdoors", caption: "A pause on the rocks" },
+  { photo: photos.beachSitting, category: "outdoors", caption: "Hands in the sand" },
+  { photo: photos.beachSmile, category: "outdoors", caption: "On the sand" },
+  { photo: photos.parkYellowDress, category: "outdoors", caption: "Sitting in the shade" },
 ];
 
 export default function LifeAtVidyanjali() {
+  const programmeLinks = programmes.map(({ slug, name }) => ({ slug, name }));
+
   return (
     <Section spacing="lg">
-      {/* A compact heading row, then the mosaic across all twelve columns. An
-          earlier version put the heading in a three-column rail BESIDE the
-          first two frames; because a two-line label is about 120px tall and the
-          photographs beside it were 600, that rail was five-sixths empty. A
-          short row that the pictures then run underneath costs the same
-          vertical space and leaves no hole. */}
       <Reveal>
         <Eyebrow className="mb-5">Life at Vidyanjali</Eyebrow>
         <h2 className="max-w-[16ch] text-h1">Ordinary days, closely held.</h2>
       </Reveal>
 
-      <div className="mt-12 grid gap-y-10 sm:grid-cols-2 sm:gap-x-8 lg:mt-14 lg:grid-cols-12 lg:gap-x-10 lg:gap-y-0">
-        {FRAMES.map((frame, index) => (
-          <div key={frame.photo.src} className={`${frame.span} ${frame.push}`}>
-            <ImageReveal
-              photo={frame.photo}
-              ratio={frame.ratio}
-              caption={frame.caption}
-              delay={index < 3 ? index * 80 : 0}
-              zoom
-              sizes={frame.sizes}
-            />
-          </div>
-        ))}
-      </div>
+      <LifeGallery
+        items={ITEMS}
+        categories={CATEGORIES}
+        programmes={programmeLinks}
+      />
     </Section>
   );
 }

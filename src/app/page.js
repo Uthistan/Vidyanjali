@@ -15,8 +15,8 @@ import ClosingCTA from "@/components/layout/ClosingCTA";
  * arc rather than around a tidy grouping of topics, and the order below is the
  * argument:
  *
- *   1  Hero          say the one thing, then show it. A statement centred on
- *                    cream, and a photograph the full width of the screen.
+ *   1  Hero          say the one thing, then show it. A statement on cream
+ *                    beside a portrait photograph, split on desktop.
  *   2  Journey       one sentence of history, small and quiet, deliberately
  *                    the least loud thing on the page — because it follows the
  *                    loudest image on it.
@@ -25,7 +25,7 @@ import ClosingCTA from "@/components/layout/ClosingCTA";
  *   4  Programmes    what that belief actually is, as seven pillars.
  *   5  Beyond        one of them opened out: a large photograph and two quoted
  *                    lines, on deep teal, asymmetric and bleeding right.
- *   6  Life          the photographic chapter — five frames, no two alike.
+ *   6  Life          the photographic chapter — a filterable photo grid.
  *   7  Vision        four parallel commitments, set as four, where the
  *                    repetition of the opening word IS the rhythm.
  *   8  People        who a child actually works with.

@@ -94,23 +94,38 @@ const SOURCE_PROGRAMMES = [
     points: ["Grounding"],
     images: [
       /* The audit's one unambiguous programme match, and the only genuinely
-         landscape frame supplied. */
+         landscape frame supplied. The rest are park frames from the second
+         delivery. */
       { photo: photos.parkDay },
+      { photo: photos.parkPath, caption: "A shaded path through the park." },
+      { photo: photos.parkRest, caption: "A pause on the rocks." },
+      { photo: photos.parkYellowDress, caption: "Sitting in the shade." },
     ],
   },
   {
     slug: "beach-walk",
     name: "Beach walk",
     description: "An organic active sensory therapy.",
-    images: [],
+    /* Seafront playground frames from the second delivery. They show a
+       beach outing; confirm with the client that it is this programme. */
+    images: [
+      { photo: photos.sandAndSky, caption: "Lying in the sand." },
+      { photo: photos.beachShelter, caption: "Looking out from the shelter." },
+      { photo: photos.beachClimbing, caption: "Up the climbing wall." },
+      { photo: photos.beachSitting, caption: "Hands in the sand." },
+      { photo: photos.beachSmile, caption: "On the sand." },
+    ],
   },
   {
     slug: "dance",
     name: "Dance",
-    /* NOTHING was supplied for this programme — no description, no points, no
-       photograph. The detail page is therefore a number, a title and a way
-       onward, and that is the finished design, not an unfinished one. */
-    images: [],
+    /* No description or points supplied. The photographs are from a dance
+       studio in the second delivery; confirm they show this programme. */
+    images: [
+      { photo: photos.danceClass, caption: "Arms up, in the studio." },
+      { photo: photos.danceStudio, caption: "At the barre." },
+      { photo: photos.danceBarre, caption: "A rest on the barre." },
+    ],
   },
   {
     slug: "one-day-events",
@@ -196,7 +211,7 @@ export function moreProgrammes(slug, count = 3) {
  */
 export const contentGaps = [
   "Individual therapy — no description of any kind. The page currently runs on a title and one photograph.",
-  "Dance — nothing at all: no description, no points, no photograph.",
+  "Dance — no description or points. Studio photographs are placed; confirm they show this programme.",
   "One day events — two event names, Ula and Baking, with no explanation of what either is. Confirm they are the events rather than a heading fragment.",
   "Baking — the fragment “Program professional baker” is unpublishable as written. Confirm what was meant.",
   "Every programme except Group therapy — no duration, frequency, group size or age range was supplied, so none is stated anywhere.",

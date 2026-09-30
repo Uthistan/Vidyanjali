@@ -1,0 +1,63 @@
+/**
+ * Transactional email through Resend's HTTP API.
+ *
+ * Plain `fetch` rather than the SDK: two sends from one route do not justify a
+ * dependency. Server-only — this reads the API key and must never be imported
+ * into a client component.
+ *
+ * ENV (see .env.local, which is git-ignored):
+ *   RESEND_API_KEY  send-only key from the Resend dashboard
+ *   CONTACT_FROM    "Name <address>" on a domain verified in Resend
+ *   CONTACT_TO      inbox that receives new enquiries
+ */
+
+const RESEND_URL = "https://api.resend.com/emails";
+
+const DEFAULT_FROM = "Vidyanjali Learning Centre <contact@vidyanjalilearningcentre.com>";
+const DEFAULT_TO = "contact@vidyanjalilearningcentre.com";
+
+export const emailConfig = {
+  from: process.env.CONTACT_FROM || DEFAULT_FROM,
+  to: process.env.CONTACT_TO || DEFAULT_TO,
+};
+
+/**
+ * Sends one email. Resolves to Resend's response body (`{ id }`), or throws
+ * with Resend's own error message so the route can log something useful.
+ */
+export async function sendEmail({ to, subject, html, text, replyTo }) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) throw new Error("RESEND_API_KEY is not set");
+
+  const res = await fetch(RESEND_URL, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: emailConfig.from,
+      to: Array.isArray(to) ? to : [to],
+      subject,
+      html,
+      text,
+      ...(replyTo ? { reply_to: replyTo } : {}),
+    }),
+  });
+
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(`Resend ${res.status}: ${body?.message || "send failed"}`);
+  }
+  return body;
+}
+
+/** Escapes user input for interpolation into an HTML email. */
+export function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}

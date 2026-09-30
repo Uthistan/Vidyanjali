@@ -11,6 +11,7 @@ export default function ContactForm() {
     childName: "",
     dob: "",
     reason: "",
+    website: "",
   });
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -43,7 +44,7 @@ export default function ContactForm() {
 
       setStatus({
         type: "success",
-        message: "Thanks — we received your enquiry.",
+        message: "Thank you — we've received your enquiry. A confirmation has been sent to your email.",
       });
       setForm({
         parentName: "",
@@ -52,6 +53,7 @@ export default function ContactForm() {
         childName: "",
         dob: "",
         reason: "",
+        website: "",
       });
     } catch (err) {
       setStatus({ type: "error", message: err.message || "Submission failed" });
@@ -81,7 +83,7 @@ export default function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="grid w-full gap-x-8 gap-y-5 sm:grid-cols-2"
+      className="relative grid w-full gap-x-8 gap-y-5 sm:grid-cols-2"
     >
       <label className={fieldWrap}>
         <div className="text-eyebrow font-sans uppercase text-purple mb-2">Parent Name</div>
@@ -152,6 +154,21 @@ export default function ContactForm() {
           className={`${inputClass} h-32 resize-none`}
         />
       </label>
+
+      {/* Honeypot. Hidden from people and from assistive tech; bots that fill
+          every field trip it, and the API then sends nothing. */}
+      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+        <label>
+          Website
+          <input
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            value={form.website}
+            onChange={update}
+          />
+        </label>
+      </div>
 
       {status && (
         <div

@@ -31,6 +31,12 @@ const SOURCE_DIR =
   process.env.PHOTO_SOURCE_DIR ??
   path.join(homedir(), "Downloads", "WhatsApp Unknown 2026-09-02 at 20.03.46");
 
+/* The second delivery: 27 files named 1.jpg–27.jpg, kept in the git-ignored
+   `photo-sources/` folder at the repo root so the masters can be rebuilt. */
+const SOURCE_DIR_2 =
+  process.env.PHOTO_SOURCE_DIR_2 ??
+  path.join(process.cwd(), "photo-sources", "batch-2");
+
 const OUT_DIR = path.join(process.cwd(), "public", "photos");
 
 /**
@@ -129,6 +135,146 @@ const PHOTOS = [
 ];
 
 /**
+ * The second delivery. Every file is 1200×1600 portrait (19.jpg is 1012 wide,
+ * 16.jpg 1168). `source` is the exact filename. Rejections from this batch are
+ * listed with their reasons in `rejected` in src/content/photos.js.
+ */
+const PHOTOS_2 = [
+  {
+    id: "beach-slide",
+    source: "3.jpg",
+    // The hero. Full frame: the sun, the open sky and the child climbing the
+    // slide are the picture, and the hero crops it further by `focal`.
+    crop: { x: 0.0, y: 0.0, w: 1.0, h: 1.0 },
+    adjust: { saturation: 0.95 },
+  },
+  {
+    id: "sand-and-sky",
+    source: "4.jpg",
+    crop: { x: 0.0, y: 0.0, w: 1.0, h: 1.0 },
+    adjust: { saturation: 0.95 },
+  },
+  {
+    id: "beach-shelter",
+    source: "5.jpg",
+    crop: { x: 0.0, y: 0.0, w: 1.0, h: 1.0 },
+    adjust: { saturation: 0.95 },
+  },
+  {
+    id: "beach-climbing",
+    source: "2.jpg",
+    // Trim the empty sky above the play frame.
+    crop: { x: 0.0, y: 0.06, w: 1.0, h: 0.94 },
+    adjust: { saturation: 0.92 },
+  },
+  {
+    id: "beach-sitting",
+    source: "1.jpg",
+    crop: { x: 0.0, y: 0.08, w: 1.0, h: 0.92 },
+    adjust: { saturation: 0.95 },
+  },
+  {
+    id: "beach-swing",
+    source: "22.jpg",
+    // Preferred over 21.jpg, the same swing a moment earlier with the face
+    // turned down.
+    crop: { x: 0.0, y: 0.0, w: 1.0, h: 1.0 },
+    adjust: { saturation: 0.95 },
+  },
+  {
+    id: "beach-smile",
+    source: "6.jpg",
+    crop: { x: 0.0, y: 0.0, w: 1.0, h: 1.0 },
+    adjust: { saturation: 0.95 },
+  },
+  {
+    id: "park-path",
+    source: "17.jpg",
+    crop: { x: 0.0, y: 0.0, w: 1.0, h: 1.0 },
+    adjust: { saturation: 0.92 },
+  },
+  {
+    id: "park-rest",
+    source: "8.jpg",
+    crop: { x: 0.0, y: 0.0, w: 1.0, h: 1.0 },
+    adjust: { saturation: 0.92 },
+  },
+  {
+    id: "park-tree",
+    source: "15.jpg",
+    crop: { x: 0.0, y: 0.0, w: 1.0, h: 1.0 },
+    adjust: { saturation: 0.92 },
+  },
+  {
+    id: "park-yellow-dress",
+    source: "7.jpg",
+    crop: { x: 0.0, y: 0.0, w: 1.0, h: 1.0 },
+    adjust: { saturation: 0.92 },
+  },
+  {
+    id: "dance-class",
+    source: "9.jpg",
+    // Cool fluorescent studio light; warm it slightly toward the palette.
+    crop: { x: 0.0, y: 0.0, w: 1.0, h: 1.0 },
+    adjust: { saturation: 0.95, linear: [1.03, 0] },
+  },
+  {
+    id: "dance-studio",
+    source: "10.jpg",
+    crop: { x: 0.0, y: 0.0, w: 1.0, h: 1.0 },
+  },
+  {
+    id: "dance-barre",
+    source: "23.jpg",
+    // Preferred over the near-identical 24.jpg.
+    crop: { x: 0.0, y: 0.0, w: 1.0, h: 1.0 },
+  },
+  {
+    id: "festival-pair",
+    source: "12.jpg",
+    // Preferred over 14.jpg (same moment) and 11.jpg (same session).
+    crop: { x: 0.0, y: 0.0, w: 1.0, h: 1.0 },
+    adjust: { saturation: 0.92 },
+  },
+  {
+    id: "festival-altar",
+    source: "13.jpg",
+    crop: { x: 0.0, y: 0.0, w: 1.0, h: 1.0 },
+    adjust: { saturation: 0.92 },
+  },
+  {
+    id: "festival-pookalam",
+    source: "20.jpg",
+    // Preferred over 18.jpg: same moment, but here the boy is looking at the
+    // pookalam rather than at the camera.
+    crop: { x: 0.0, y: 0.0, w: 1.0, h: 1.0 },
+    adjust: { saturation: 0.9 },
+  },
+  {
+    id: "sensory-blocks",
+    source: "19.jpg",
+    // A CINEMATIC video-mode badge is burned into the top-left corner; the
+    // crop takes the top 8% off to remove it.
+    crop: { x: 0.0, y: 0.08, w: 1.0, h: 0.92 },
+    adjust: { saturation: 0.92 },
+  },
+  {
+    id: "bus-window",
+    source: "26.jpg",
+    crop: { x: 0.0, y: 0.0, w: 1.0, h: 1.0 },
+    adjust: { saturation: 0.92 },
+  },
+  {
+    id: "bus-ride",
+    source: "25.jpg",
+    // Cropped to the left two-thirds: the right edge shows another passenger
+    // facing the camera who may be a member of the public.
+    crop: { x: 0.0, y: 0.12, w: 0.68, h: 0.88 },
+    adjust: { saturation: 0.92 },
+  },
+];
+
+/**
  * WhatsApp names are long and carry a date the audit does not use, so a photo
  * is addressed by its timestamp alone.
  *
@@ -142,62 +288,83 @@ function findSource(files, timestamp) {
   return files.find((file) => file.endsWith(tail));
 }
 
-async function main() {
-  if (!existsSync(SOURCE_DIR)) {
-    console.error(
-      `Source folder not found:\n  ${SOURCE_DIR}\n\n` +
-        `Set PHOTO_SOURCE_DIR to the folder holding the client's originals.`,
-    );
-    process.exit(1);
+/** Exact filename match, for the second batch's plain numbered files. */
+function findExact(files, name) {
+  return files.find((file) => file === name);
+}
+
+/**
+ * Each batch runs only if its folder is present, so rebuilding one delivery
+ * never requires the other to be on disk — and never touches its masters.
+ */
+const BATCHES = [
+  { dir: SOURCE_DIR, env: "PHOTO_SOURCE_DIR", photos: PHOTOS, find: findSource },
+  { dir: SOURCE_DIR_2, env: "PHOTO_SOURCE_DIR_2", photos: PHOTOS_2, find: findExact },
+];
+
+async function processPhoto(file, photo) {
+  // `rotate()` with no argument applies the EXIF orientation and drops the
+  // tag, so the crop fractions below are measured against the upright frame.
+  const pipeline = sharp(file).rotate();
+  const { width, height } = await pipeline.metadata();
+
+  const { x, y, w, h } = photo.crop;
+  const extract = {
+    left: Math.round(x * width),
+    top: Math.round(y * height),
+    width: Math.round(w * width),
+    height: Math.round(h * height),
+  };
+
+  let out = pipeline.extract(extract);
+
+  if (photo.adjust?.linear) {
+    out = out.linear(...photo.adjust.linear);
   }
 
+  if (photo.adjust?.saturation) {
+    out = out.modulate({ saturation: photo.adjust.saturation });
+  }
+
+  // A light pass to recover the detail the source's own JPEG compression
+  // softened. Not a substitute for a sharper original.
+  out = out.sharpen({ sigma: 0.6 });
+
+  const target = path.join(OUT_DIR, `${photo.id}.jpg`);
+  const info = await out
+    .jpeg({ quality: 84, mozjpeg: true, chromaSubsampling: "4:4:4" })
+    .toFile(target);
+
+  console.log(
+    `  ok    ${photo.id.padEnd(20)} ${info.width}×${info.height}` +
+      `  ${(info.size / 1024).toFixed(0)}KB`,
+  );
+}
+
+async function main() {
   await mkdir(OUT_DIR, { recursive: true });
-  const files = await readdir(SOURCE_DIR);
 
-  for (const photo of PHOTOS) {
-    const file = findSource(files, photo.source);
-
-    if (!file) {
-      console.warn(`  skip  ${photo.id} — no source matching "${photo.source}"`);
+  for (const batch of BATCHES) {
+    if (!existsSync(batch.dir)) {
+      console.warn(
+        `Source folder not found, batch skipped:\n  ${batch.dir}\n` +
+          `  Set ${batch.env} to the folder holding these originals.`,
+      );
       continue;
     }
 
-    // `rotate()` with no argument applies the EXIF orientation and drops the
-    // tag, so the crop fractions below are measured against the upright frame.
-    const pipeline = sharp(path.join(SOURCE_DIR, file)).rotate();
-    const { width, height } = await pipeline.metadata();
+    const files = await readdir(batch.dir);
 
-    const { x, y, w, h } = photo.crop;
-    const extract = {
-      left: Math.round(x * width),
-      top: Math.round(y * height),
-      width: Math.round(w * width),
-      height: Math.round(h * height),
-    };
+    for (const photo of batch.photos) {
+      const file = batch.find(files, photo.source);
 
-    let out = pipeline.extract(extract);
+      if (!file) {
+        console.warn(`  skip  ${photo.id} — no source matching "${photo.source}"`);
+        continue;
+      }
 
-    if (photo.adjust?.linear) {
-      out = out.linear(...photo.adjust.linear);
+      await processPhoto(path.join(batch.dir, file), photo);
     }
-
-    if (photo.adjust?.saturation) {
-      out = out.modulate({ saturation: photo.adjust.saturation });
-    }
-
-    // A light pass to recover the detail the source's own JPEG compression
-    // softened. Not a substitute for a sharper original.
-    out = out.sharpen({ sigma: 0.6 });
-
-    const target = path.join(OUT_DIR, `${photo.id}.jpg`);
-    const info = await out
-      .jpeg({ quality: 84, mozjpeg: true, chromaSubsampling: "4:4:4" })
-      .toFile(target);
-
-    console.log(
-      `  ok    ${photo.id.padEnd(20)} ${info.width}×${info.height}` +
-        `  ${(info.size / 1024).toFixed(0)}KB`,
-    );
   }
 }
 

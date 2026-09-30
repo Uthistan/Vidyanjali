@@ -13,12 +13,10 @@ import PhotoCarousel from "@/components/ui/PhotoCarousel";
  * the single case. Between them every programme is covered, and neither ever
  * renders an empty control.
  *
- * NOTHING CURRENTLY REACHES THIS. No programme in the supplied set has two
- * confirmed photographs: Individual therapy and Park day have one each and the
- * other five have none. This exists because the template has to hold when the
- * client sends a real set — and it reuses the Stage 2 carousel rather than
- * introducing a second one, so there is one scroll-snap implementation on the
- * site and one set of controls to keep accessible.
+ * Park day, Beach walk and Dance reach this, from the second photo delivery.
+ * It reuses the Stage 2 carousel rather than introducing a second one, so
+ * there is one scroll-snap implementation on the site and one set of controls
+ * to keep accessible.
  */
 export default function ProgrammeGallery({ programme }) {
   if (programme.images.length < 2) return null;

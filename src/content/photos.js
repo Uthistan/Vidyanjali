@@ -197,6 +197,239 @@ export const photos = {
     quality: "hold",
     consent: "required — one face is identifiable",
   },
+
+  /* ── SECOND DELIVERY ──────────────────────────────────────────────────────
+     27 files, all 1200×1600 portrait, processed from `photo-sources/batch-2`
+     by the same script. The beach frames are a sandy seafront playground; the
+     dance frames are a studio signed "High On Dance". Neither is confirmed by
+     the client as the Beach walk or Dance programme itself — see the notes in
+     content/programmes.js. */
+
+  beachSlide: {
+    src: "/photos/beach-slide.jpg",
+    width: 1200,
+    height: 1600,
+    alt: "A small child climbing up a blue slide on a wide sandy playground, under a hazy sun.",
+    /* The homepage hero. The hero crops this toward a square on desktop;
+       60% keeps both the sun and the child in frame. */
+    focal: "50% 60%",
+    tone: "warm",
+    quality: "keep",
+    consent: "not required — the child is small in frame and not identifiable",
+  },
+
+  sandAndSky: {
+    src: "/photos/sand-and-sky.jpg",
+    width: 1200,
+    height: 1600,
+    alt: "A child lying on the sand, looking out toward a playground under a hazy sun.",
+    focal: "50% 55%",
+    tone: "warm",
+    quality: "keep",
+    consent: "not required — seen from behind",
+  },
+
+  beachShelter: {
+    src: "/photos/beach-shelter.jpg",
+    width: 1200,
+    height: 1600,
+    alt: "A boy under a thatched shelter, looking out across the sand.",
+    focal: "50% 40%",
+    tone: "warm",
+    quality: "keep",
+    consent: "advisable — the child is recognisable in profile",
+  },
+
+  beachClimbing: {
+    src: "/photos/beach-climbing.jpg",
+    width: 1200,
+    height: 1504,
+    alt: "A boy climbing a green climbing wall on a playground set in the sand.",
+    focal: "40% 50%",
+    tone: "warm",
+    quality: "keep",
+    consent: "not required — face turned to the wall",
+  },
+
+  beachSitting: {
+    src: "/photos/beach-sitting.jpg",
+    width: 1200,
+    height: 1472,
+    alt: "A boy sitting in the sand with his chin on his knee, his hands resting in the sand.",
+    focal: "50% 50%",
+    tone: "warm",
+    quality: "keep",
+    consent: "advisable — the child is recognisable in profile",
+  },
+
+  beachSwing: {
+    src: "/photos/beach-swing.jpg",
+    width: 1200,
+    height: 1600,
+    alt: "A boy lying across a green swing seat on his stomach, smiling at the camera.",
+    focal: "50% 55%",
+    tone: "cool",
+    quality: "keep",
+    consent: "required — the face is clearly identifiable",
+  },
+
+  beachSmile: {
+    src: "/photos/beach-smile.jpg",
+    width: 1200,
+    height: 1600,
+    alt: "A young child standing barefoot on the sand, smiling at the camera.",
+    focal: "50% 40%",
+    tone: "warm",
+    quality: "keep",
+    consent: "required — the face is clearly identifiable",
+  },
+
+  parkPath: {
+    src: "/photos/park-path.jpg",
+    width: 1200,
+    height: 1600,
+    alt: "A paved path with a yellow tactile strip curving through a tunnel of trees.",
+    focal: "50% 50%",
+    tone: "cool",
+    /* No people. The nearest thing in the set to an establishing shot. */
+    quality: "keep",
+    consent: "not required — no people",
+  },
+
+  parkRest: {
+    src: "/photos/park-rest.jpg",
+    width: 1200,
+    height: 1600,
+    alt: "A boy with a patterned drawstring bag sitting on a rock in a leafy garden.",
+    focal: "45% 50%",
+    tone: "cool",
+    quality: "keep",
+    consent: "not required — face turned away",
+  },
+
+  parkTree: {
+    src: "/photos/park-tree.jpg",
+    width: 1200,
+    height: 1600,
+    alt: "A young child sitting on a low tree branch in a park, one hand on the trunk.",
+    focal: "55% 40%",
+    tone: "cool",
+    quality: "keep",
+    consent: "required — the face is clearly identifiable",
+  },
+
+  parkYellowDress: {
+    src: "/photos/park-yellow-dress.jpg",
+    width: 1200,
+    height: 1600,
+    alt: "A young child in a yellow dress sitting in the shade of a tree in a park.",
+    focal: "50% 40%",
+    tone: "warm",
+    quality: "keep",
+    consent: "required — the face is clearly identifiable",
+  },
+
+  danceClass: {
+    src: "/photos/dance-class.jpg",
+    width: 1200,
+    height: 1600,
+    alt: "Two children and two adults in a dance studio, arms raised above their heads, seen from behind.",
+    focal: "50% 45%",
+    tone: "cool",
+    quality: "keep",
+    consent: "not required — everyone is seen from behind",
+  },
+
+  danceStudio: {
+    src: "/photos/dance-studio.jpg",
+    width: 1200,
+    height: 1600,
+    alt: "A boy in a cap standing at a ballet barre in front of a dark blue studio wall, smiling.",
+    focal: "50% 55%",
+    tone: "cool",
+    quality: "keep",
+    consent: "required — the face is clearly identifiable",
+  },
+
+  danceBarre: {
+    src: "/photos/dance-barre.jpg",
+    width: 1200,
+    height: 1600,
+    alt: "A boy sitting on a ballet barre against a dark blue studio wall, smiling.",
+    focal: "40% 60%",
+    tone: "cool",
+    quality: "keep",
+    consent: "required — the face is clearly identifiable",
+  },
+
+  festivalPair: {
+    src: "/photos/festival-pair.jpg",
+    width: 1200,
+    height: 1600,
+    alt: "A girl in a red silk skirt and a boy in an orange kurta standing together in festival dress.",
+    focal: "45% 40%",
+    tone: "warm",
+    quality: "keep",
+    consent: "required — both faces are clearly identifiable",
+  },
+
+  festivalAltar: {
+    src: "/photos/festival-altar.jpg",
+    width: 1200,
+    height: 1600,
+    alt: "A festival display of clay pots, peacock feathers and marigolds on a draped silk cloth.",
+    focal: "50% 50%",
+    tone: "warm",
+    quality: "keep",
+    consent: "not required — no people",
+  },
+
+  festivalPookalam: {
+    src: "/photos/festival-pookalam.jpg",
+    width: 1200,
+    height: 1600,
+    alt: "A boy in a red kurta pointing at a floral pookalam laid on the floor around a small lamp.",
+    focal: "50% 50%",
+    tone: "warm",
+    quality: "keep",
+    consent: "required — the child is recognisable",
+  },
+
+  sensoryBlocks: {
+    src: "/photos/sensory-blocks.jpg",
+    width: 1012,
+    height: 1472,
+    alt: "Two children lying on their fronts along a bench, reaching down to baskets of wooden blocks.",
+    focal: "50% 50%",
+    tone: "warm",
+    /* A video still, cropped to remove a burned-in CINEMATIC badge. Soft;
+       keep it at mosaic size or smaller. */
+    quality: "hold",
+    consent: "not required — faces turned down",
+  },
+
+  busWindow: {
+    src: "/photos/bus-window.jpg",
+    width: 1200,
+    height: 1600,
+    alt: "Two children standing in a bus, holding the seat rail and looking out of the window.",
+    focal: "50% 45%",
+    tone: "warm",
+    quality: "keep",
+    consent: "not required — seen from behind",
+  },
+
+  busRide: {
+    src: "/photos/bus-ride.jpg",
+    width: 816,
+    height: 1408,
+    alt: "A young person seated on a bus, seen from behind, looking out of a wide window.",
+    focal: "50% 45%",
+    tone: "cool",
+    /* Cropped to the left two-thirds to exclude a forward-facing passenger. */
+    quality: "keep",
+    consent: "not required — seen from behind",
+  },
 };
 
 /**
@@ -243,6 +476,18 @@ export const rejected = [
     reason:
       "Kept as clayWorkDetail rather than rejected, but noted here: it is the third frame of the same clay session. Do not place all three together.",
   },
+  // Second delivery (photo-sources/batch-2).
+  { source: "11.jpg", reason: "Same festival session as 12.jpg, which is the stronger frame." },
+  { source: "14.jpg", reason: "Near-duplicate of 12.jpg." },
+  { source: "16.jpg", reason: "Heavy motion blur. No usable crop." },
+  { source: "18.jpg", reason: "Same moment as 20.jpg; 20.jpg is preferred." },
+  { source: "21.jpg", reason: "Same swing as 22.jpg with the face turned down; 22.jpg is preferred." },
+  { source: "24.jpg", reason: "Near-duplicate of 23.jpg." },
+  {
+    source: "27.jpg",
+    reason:
+      "Several members of the public at a bus stand fill the middle of the frame and cannot have consented. Same problem as 13.15.12.",
+  },
 ];
 
 /**
@@ -252,10 +497,9 @@ export const rejected = [
  */
 export const gaps = [
   "Baking — a listed programme with no photograph at all.",
-  "Dance — a listed programme with no photograph at all.",
-  "Beach walk — a listed programme with no photograph at all.",
+  "Dance and Beach walk — the second delivery has studio and seafront frames now placed on these pages. Confirm they show the programmes themselves.",
   "Group therapy — the 3-hour, five-child programme has no clear image.",
   "The building, the rooms and the entrance — there is no establishing shot of the centre anywhere in the set.",
   "Portraits of the founders and the team, for /about.",
-  "More horizontal frames. The client has now supplied ONE — the hero, hands-mirroring, at 1536×1024 — and the homepage is built around it. Every other master is still portrait or squarish and no wider than 1600px, so there is still no second image that can run full-bleed across a desktop screen.",
+  "More horizontal frames. The only one supplied is hands-mirroring, at 1536×1024, and it is no longer the hero. All 27 files in the second delivery are portrait, so the hero is now a split layout rather than full-bleed.",
 ];
